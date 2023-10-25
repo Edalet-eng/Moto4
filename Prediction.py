@@ -1,6 +1,5 @@
 from PIL import Image
 import streamlit as st
-import seaborn as sns
 import pandas as pd
 import warnings
 import pickle
@@ -23,7 +22,6 @@ from mlxtend.plotting import plot_sequential_feature_selection
 from sklearn.compose import make_column_selector
 from sklearn.metrics import mean_squared_error,mean_absolute_error,r2_score
 import sklearn
-sns.set(font_scale = 1.5, style = 'darkgrid', palette = 'bright')
 pd.set_option('display.max_columns', None)
 warnings.filterwarnings(action = 'ignore')
 sklearn.set_config(display = 'diagram')
