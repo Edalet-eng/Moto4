@@ -5,7 +5,6 @@ import warnings
 import pickle
 import numpy as np
 import time
-import sklearn
 pd.set_option('display.max_columns', None)
 warnings.filterwarnings(action = 'ignore')
 sklearn.set_config(display = 'diagram')
