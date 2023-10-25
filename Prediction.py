@@ -5,9 +5,7 @@ import warnings
 import pickle
 import numpy as np
 import time
-pd.set_option('display.max_columns', None)
-warnings.filterwarnings(action = 'ignore')
-sklearn.set_config(display = 'diagram')
+
 np.random.seed(seed = 42)
 
 df=pd.read_csv('data.csv')
