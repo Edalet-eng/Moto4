@@ -5,7 +5,7 @@ import warnings
 import pickle
 import numpy as np
 import time
-
+from sklearn.preprocessing import LabelEncoder
 np.random.seed(seed = 42)
 
 df=pd.read_csv('data.csv')
