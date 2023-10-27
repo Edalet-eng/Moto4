@@ -1,34 +1,12 @@
 from PIL import Image
-import plotly.express as px
-import streamlit as st
-import seaborn as sns
+
 import pandas as pd
-import warnings
+
 import pickle
 import numpy as np
-import time
-from xgboost import XGBRegressor
-from sklearn.model_selection import RepeatedKFold,RepeatedStratifiedKFold,StratifiedKFold,train_test_split,GridSearchCV,cross_val_score
-from sklearn.preprocessing import StandardScaler , RobustScaler, MaxAbsScaler,MinMaxScaler,OneHotEncoder, LabelEncoder
-from sklearn.feature_selection import SequentialFeatureSelector
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-import scipy.stats as stats
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler , RobustScaler, MaxAbsScaler,MinMaxScaler,OneHotEncoder, LabelEncoder
-import xgboost
-from xgboost import XGBRegressor
-from sklearn.feature_selection import SequentialFeatureSelector
-from mlxtend.feature_selection import SequentialFeatureSelector
-from mlxtend.plotting import plot_sequential_feature_selection
-from sklearn.compose import make_column_selector
-from sklearn.metrics import mean_squared_error,mean_absolute_error,r2_score
-import sklearn
-sns.set(font_scale = 1.5, style = 'darkgrid', palette = 'bright')
-pd.set_option('display.max_columns', None)
-warnings.filterwarnings(action = 'ignore')
-sklearn.set_config(display = 'diagram')
-np.random.seed(seed = 42)
+
+from sklearn.preprocessing import LabelEncoder
+
 
 df=pd.read_csv('data.csv')
  
