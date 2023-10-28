@@ -287,11 +287,11 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
 
-    import streamlit as st
+    import requests
     import sqlite3
 
     # GitHub-dan verilənləri çəkmək üçün giriş məlumatlarını qeyd edin
-    
+    get_response = 'https://github.com/Edalet-eng/Moto4/blob/main/yorumlar.db'
 
     # Veritabanı bağlantısı
     conn = sqlite3.connect("yorumlar.db")
@@ -321,7 +321,7 @@ with interface:
         comments = []
         try:
             # GitHub-dan yorumları çək
-            response = requests.get('https://github.com/Edalet-eng/Moto4/blob/main/yorumlar.db')
+            response = requests.get(get_response)
             data = response.json()
 
             # Verilənləri yoxla və yorumları listə əlavə et
