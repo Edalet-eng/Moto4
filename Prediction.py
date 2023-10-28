@@ -291,7 +291,7 @@ with interface:
     import sqlite3
 
     # GitHub-dan verilənləri çəkmək üçün giriş məlumatlarını qeyd edin
-    github_repo_url = "https://github.com/Edalet-eng/Moto4/blob/main/yorumlar.db"
+    
 
     # Veritabanı bağlantısı
     conn = sqlite3.connect("yorumlar.db")
@@ -321,7 +321,7 @@ with interface:
         comments = []
         try:
             # GitHub-dan yorumları çək
-            response = requests.get(github_repo_url)
+            response = requests.get('https://github.com/Edalet-eng/Moto4/blob/main/yorumlar.db')
             data = response.json()
 
             # Verilənləri yoxla və yorumları listə əlavə et
