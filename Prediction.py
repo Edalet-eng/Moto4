@@ -291,7 +291,7 @@ with interface:
     import sqlite3
 
     # GitHub-dan verilənləri çəkmək üçün giriş məlumatlarını qeyd edin
-    get_response = 'https://github.com/Edalet-eng/yorumlar/blob/main/yorumlar.db'
+    get_response = 'https://github.com/Edalet-eng/Moto4/blob/main/yorumlar.db'
 
     # Veritabanı bağlantısı
     conn = sqlite3.connect("yorumlar.db")
