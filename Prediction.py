@@ -308,7 +308,7 @@ with interface:
     
     # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
     conn.close()
-    )
+    
     
   
       
