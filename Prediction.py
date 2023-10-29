@@ -290,23 +290,23 @@ with interface:
 
 
  
- # Yorumlar bazasına qoşulun
- conn = sqlite3.connect('yorumlar.db')
- cursor = conn.cursor()
+    # Yorumlar bazasına qoşulun
+    conn = sqlite3.connect('yorumlar.db')
+    cursor = conn.cursor()
+    
+    # SQL sorğusu ilə yorumları əldə edin
+    cursor.execute("SELECT * FROM yorumlar")
+    yorumlar = cursor.fetchall()
+    
+    # Streamlit tətbiqini yaradın
+    st.title('Yorumlar Tətbiqi')
+    
+    # Əldə etdiyiniz yorumları görüntüləyin
+    for yorum in yorumlar:
+        st.write(yorum)
+    
+    # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
+    conn.close()
  
- # SQL sorğusu ilə yorumları əldə edin
- cursor.execute("SELECT * FROM yorumlar")
- yorumlar = cursor.fetchall()
- 
- # Streamlit tətbiqini yaradın
- st.title('Yorumlar Tətbiqi')
- 
- # Əldə etdiyiniz yorumları görüntüləyin
- for yorum in yorumlar:
-     st.write(yorum)
- 
- # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
- conn.close()
-
- 
-     
+  
+      
