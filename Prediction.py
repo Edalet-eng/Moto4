@@ -287,34 +287,35 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
 import sqlite3
- 
-    # Veritabanı bağlantısını oluşturun
-    conn = sqlite3.connect("yorumlar.db")
-    cur = conn.cursor()
-    
-    # Tabloyu oluşturun (ilk kez çalıştırıldığında)
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS yorumlar (
-            id INTEGER PRIMARY KEY,
-            yorum TEXT
-        )
-    ''')
-    
-    # Yeni bir yorum ekleyin
-    def yeni_yorum_ekle(yorum_metni):
-        cur.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum_metni,))
-        conn.commit()
-    
-    # Tüm yorumları çekin
-    def yorumlari_getir():
-        cur.execute("SELECT yorum FROM yorumlar")
-        yorumlar = cur.fetchall()
-        return [yorum[0] for yorum in yorumlar]
-    
-    # Örnek: Yeni yorum eklemek
-    yeni_yorum_ekle("Bu bir örnek yorumdur.")
-    
-    # Örnek: Tüm yorumları çekmek
-    tum_yorumlar = yorumlari_getir()
-    print(tum_yorumlar)
+
+# Veritabanı bağlantısını oluşturun
+conn = sqlite3.connect("yorumlar.db")
+cur = conn.cursor()
+
+# Tabloyu oluşturun (ilk kez çalıştırıldığında)
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS yorumlar (
+        id INTEGER PRIMARY KEY,
+        yorum TEXT
+    )
+''')
+
+# Yeni bir yorum ekleyin
+def yeni_yorum_ekle(yorum_metni):
+    cur.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum_metni,))
+    conn.commit()
+
+# Tüm yorumları çekin
+def yorumlari_getir():
+    cur.execute("SELECT yorum FROM yorumlar")
+    yorumlar = cur.fetchall()
+    return [yorum[0] for yorum in yorumlar]
+
+# Örnek: Yeni yorum eklemek
+yeni_yorum_ekle("Bu bir örnek yorumdur.")
+
+# Örnek: Tüm yorumları çekmek
+tum_yorumlar = yorumlari_getir()
+print(tum_yorumlar)
+
     
