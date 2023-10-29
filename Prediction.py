@@ -286,68 +286,35 @@ with interface:
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
-
-    import requests
-    import sqlite3
-
-    # GitHub-dan verilənləri çəkmək üçün giriş məlumatlarını qeyd edin
-    get_response = 'https://github.com/Edalet-eng/yorumlar/blob/main/yorumlar.db'
-
-    # Veritabanı bağlantısı
-    conn = sqlite3.connect("yorumlar.db")
-    cur = conn.cursor()
-
-    # Tabloyu yarat (ilk işdə)
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS yorumlar (
-            yorum TEXT
-        )
-    ''')
-
-    # Streamlit tətbiqi
-    st.subheader("Yorumlar")
-
-    # Yeni yorum
-    new_comment = st.text_area("Yeni yorum")
-
-    # Yeni yorum əlavə etmə düyməsi
-    if st.button("Yorum əlavə et"):
-        cur.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (new_comment,))
-        conn.commit()
-        st.success("Yorumunuz başarıyla əlavə edildi.")
-
-    # Yorumları çəkmək üçün funksiya
-    def fetch_comments():
-        comments = []
-        try:
-            # GitHub-dan yorumları çək
-            response = requests.get(get_response)
-            data = response.json()
-
-            # Verilənləri yoxla və yorumları listə əlavə et
-            if "yorumlar" in data:
-                comments = data["yorumlar"]
-        except Exception as e:
-            st.warning(f"Xəta: {e}")
-        return comments
-
-    # GitHub-dan yorumları çək
-    comments = fetch_comments()
-
-    # Yorumları göstərin
-    for comment in comments:
-        st.write(comment)
-
-    # Streamlit tətbiqini başladınca yorumları həmişə çəkmək üçün funksiya
-    @st.cache(suppress_st_warning=True)
-    def load_comments():
-        return fetch_comments()
-
-    # Tətbiqi hər dəfə başladanda yorumları çəkin
-    all_comments = load_comments()
-    st.write("Bütün yorumlar:")
-    for comment in all_comments:
-        st.write(comment)
-
-
-
+ import sqlite3
+ 
+ # Veritabanı bağlantısını oluşturun
+ conn = sqlite3.connect("yorumlar.db")
+ cur = conn.cursor()
+ 
+ # Tabloyu oluşturun (ilk kez çalıştırıldığında)
+ cur.execute('''
+     CREATE TABLE IF NOT EXISTS yorumlar (
+         id INTEGER PRIMARY KEY,
+         yorum TEXT
+     )
+ ''')
+ 
+ # Yeni bir yorum ekleyin
+ def yeni_yorum_ekle(yorum_metni):
+     cur.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum_metni,))
+     conn.commit()
+ 
+ # Tüm yorumları çekin
+ def yorumlari_getir():
+     cur.execute("SELECT yorum FROM yorumlar")
+     yorumlar = cur.fetchall()
+     return [yorum[0] for yorum in yorumlar]
+ 
+ # Örnek: Yeni yorum eklemek
+ yeni_yorum_ekle("Bu bir örnek yorumdur.")
+ 
+ # Örnek: Tüm yorumları çekmek
+ tum_yorumlar = yorumlari_getir()
+ print(tum_yorumlar)
+ 
