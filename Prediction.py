@@ -288,34 +288,25 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
 
- # Veritabanı bağlantısını oluşturun
- conn = sqlite3.connect("yorumlar.db")
- cur = conn.cursor()
+
  
- # Tabloyu oluşturun (ilk kez çalıştırıldığında)
- cur.execute('''
-     CREATE TABLE IF NOT EXISTS yorumlar (
-         id INTEGER PRIMARY KEY,
-         yorum TEXT
-     )
- ''')
+ # Yorumlar bazasına qoşulun
+ conn = sqlite3.connect('yorumlar.db')
+ cursor = conn.cursor()
  
- # Yeni bir yorum ekleyin
- def yeni_yorum_ekle(yorum_metni):
-     cur.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum_metni,))
-     conn.commit()
+ # SQL sorğusu ilə yorumları əldə edin
+ cursor.execute("SELECT * FROM yorumlar")
+ yorumlar = cursor.fetchall()
  
- # Tüm yorumları çekin
- def yorumlari_getir():
-     cur.execute("SELECT yorum FROM yorumlar")
-     yorumlar = cur.fetchall()
-     return [yorum[0] for yorum in yorumlar]
+ # Streamlit tətbiqini yaradın
+ st.title('Yorumlar Tətbiqi')
  
- # Örnek: Yeni yorum eklemek
- yeni_yorum_ekle("Bu bir örnek yorumdur.")
+ # Əldə etdiyiniz yorumları görüntüləyin
+ for yorum in yorumlar:
+     st.write(yorum)
  
- # Örnek: Tüm yorumları çekmek
- tum_yorumlar = yorumlari_getir()
- print(tum_yorumlar)
+ # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
+ conn.close()
+
  
      
