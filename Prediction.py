@@ -306,8 +306,7 @@ with interface:
         conn.commit()
         st.success("Yorumunuz uğurla əlavə edildi.")
     
-    # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
-    conn.close()
+    
     
     conn = sqlite3.connect('yorumlar.db')
     cursor = conn.cursor()
