@@ -287,26 +287,28 @@ with interface:
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
-
-
- 
+    
     # Yorumlar bazasına qoşulun
     conn = sqlite3.connect('yorumlar.db')
     cursor = conn.cursor()
     
-    # SQL sorğusu ilə yorumları əldə edin
-    cursor.execute("SELECT * FROM yorumlar")
-    yorumlar = cursor.fetchall()
-    
     # Streamlit tətbiqini yaradın
     st.title('Yorumlar Tətbiqi')
     
-    # Əldə etdiyiniz yorumları görüntüləyin
-    for yorum in yorumlar:
-        st.write(yorum)
+    # Yorum əlavə etmə formunu tərtib edin
+    yorum = st.text_area("Yorumunuzu burada daxil edin:")
+    submit = st.button("Göndər")
+    
+    # Yorum göndərildikdə
+    if submit:
+        # Əlavə olunacaq yorumları bazaya yazın
+        cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
+        conn.commit()
+        st.success("Yorumunuz uğurla əlavə edildi.")
     
     # Əgər artıq əlaqəni bağlamısınızsa, onu bağlayın
     conn.close()
- 
+    )
+    
   
       
