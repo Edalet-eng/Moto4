@@ -286,7 +286,7 @@ with interface:
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
- import sqlite3
+ import sqlite
  
  # Veritabanı bağlantısını oluşturun
  conn = sqlite3.connect("yorumlar.db")
