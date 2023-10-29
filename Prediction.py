@@ -305,16 +305,6 @@ with interface:
         cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
         conn.commit()
         st.success("Yorumunuz uğurla əlavə edildi.")
-    st.title('Yorumlar')
-    cursor.execute("SELECT yorum FROM yorumlar")
-    yorumlar = cursor.fetchall()
-    for yorum in yorumlar:
-        st.write(yorum[0])
-
-
-    
-    # Veritabanı bağlantısını kapat
-    conn.close()
     
     
    
