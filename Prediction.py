@@ -286,28 +286,23 @@ with interface:
         st.markdown(f'### Car\'s estimated price is:  {cars_price} AZN')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    comments_df = pd.DataFrame(columns=['User', 'Comment'])
-
-    st.write('\n\n')
-    st.write('\n\n')
-    st.write('\n\n')
-    st.write('\n\n')
+    # Yorumlar bazasına qoşulun
+    conn = sqlite3.connect('yorumlar.db')
+    cursor = conn.cursor()
     
-    # User input for new comment
-    st.subheader('Add a New Comment')
-    user_name=st.text_input("Submit your name")
-    user_comment = st.text_area('Your Comment:', '')
+    # Streamlit tətbiqini yaradın
+    st.title('Yorumlar Tətbiqi')
     
-    # Submit button
-    if st.button('Submit Comment'):
-        # Add the new comment to the DataFrame
-        new_comment = {'User': user_name, 'Comment': user_comment}
-        comments_df = comments_df.append(new_comment, ignore_index=True)
-        comments_df.to_csv('comments_df.csv' , index=False)
-        # Display a success message
-        st.success('Comment submitted successfully!')
+    # Yorum əlavə etmə formunu tərtib edin
+    yorum = st.text_area("Yorumunuzu burada daxil edin:")
+    submit = st.button("Göndər")
     
-
+    # Yorum göndərildikdə
+    if submit:
+        # Əlavə olunacaq yorumları bazaya yazın
+        cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
+        conn.commit()
+        st.success("Yorumunuz uğurla əlavə edildi.")
    
       
       
