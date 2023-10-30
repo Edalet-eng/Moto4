@@ -296,8 +296,9 @@ with interface:
     st.title('Yorumlar Tətbiqi')
     
     # Yorum əlavə etmə formunu tərtib edin
+    comments_df = pd.DataFrame(columns=['User', 'Comment'])   
     yorum = st.text_area("Yorumunuzu burada daxil edin:")
-    submit = st.button("Göndər")
+    #submit = st.button("Göndər")
     
     # Yorum göndərildikdə
     #if submit:
@@ -313,6 +314,7 @@ with interface:
     
     # Veritabanı bağlantısını kapat
     #conn.close()
+    
     if st.button('Submit Comment'):
     # Add the new comment to the DataFrame
      new_comment = {'Comment': yorum}
