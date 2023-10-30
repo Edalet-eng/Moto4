@@ -303,6 +303,21 @@ with interface:
         cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
         conn.commit()
         st.success("Yorumunuz uğurla əlavə edildi.")
+   import sqlite3
+
+   # Yorumlar bazasına qoşulun
+   conn = sqlite3.connect('yorumlar.db')
+   cursor = conn.cursor()
    
-      
+   # SQL sorğusu ilə yorumları əldə edin
+   cursor.execute("SELECT * FROM yorumlar")
+   yorumlar = cursor.fetchall()
+   
+   # Yorumlar bazası ilə işiniz bitdikdə əlaqəni bağlayın
+   conn.close()
+   
+   # Əldə etdiyiniz yorumları görüntülə
+   for yorum in yorumlar:
+       st.write(yorum)
+         
       
