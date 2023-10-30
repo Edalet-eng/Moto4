@@ -313,7 +313,8 @@ with interface:
     
     # Veritabanı bağlantısını kapat
     conn.close()
-    
+    yorumlar = pd.DataFrame(yorumlar)
+    yorumlar.to_csv('Yorumlar.csv',index = False)
    
       
       
