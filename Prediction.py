@@ -300,21 +300,26 @@ with interface:
     submit = st.button("Göndər")
     
     # Yorum göndərildikdə
-    if submit:
+    #if submit:
         # Əlavə olunacaq yorumları bazaya yazın
-        cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
-        conn.commit()
-        st.success("Yorumunuz uğurla əlavə edildi.")
-    st.title('Yorumlar')
-    cursor.execute("SELECT yorum FROM yorumlar")
-    yorumlar = cursor.fetchall()
-    for yorum in yorumlar:
-        st.write(yorum[0])
+        #cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
+        #conn.commit()
+        #st.success("Yorumunuz uğurla əlavə edildi.")
+    #st.title('Yorumlar')
+    #cursor.execute("SELECT yorum FROM yorumlar")
+    #yorumlar = cursor.fetchall()
+    #for yorum in yorumlar:
+        #st.write(yorum[0])
     
     # Veritabanı bağlantısını kapat
-    conn.close()
-    yorumlar = pd.DataFrame(yorumlar)
-    yorumlar.to_csv('Yorumlar.csv',index = False)
+    #conn.close()
+    if st.button('Submit Comment'):
+    # Add the new comment to the DataFrame
+     new_comment = {'Comment': yorum}
+     comments_df = comments_df.append(new_comment, ignore_index=True)
+     comments_df.to_csv('comments_df.csv' , index=False)
+    # Display a success message
+    st.success('Comment submitted successfully!')
    
       
       
