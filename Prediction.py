@@ -292,7 +292,7 @@ with interface:
     cursor = conn.cursor()
     
     # Streamlit tətbiqini yaradın
-    st.title('Yorumlar Tətbiqi')
+    st.subheader('Yorumlar ')
     
     # Yorum əlavə etmə formunu tərtib edin
     yorum = st.text_area("Yorumunuzu burada daxil edin:")
