@@ -7,6 +7,7 @@ import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
 import sqlite3
+st.image('WhatsApp Image 2023-10-31 at 22.19.15_4f7e2e48.jpg', use_column_width=True)
 df=pd.read_csv('data.csv')
  
 def label_encoder_process(data_frame=None):
@@ -315,8 +316,6 @@ with interface:
     # Yorumlar bazası ilə işiniz bitdikdə əlaqəni bağlayın
     conn.close()
     
-    # Əldə etdiyiniz yorumları görüntülə
-    for yorum in yorumlar:
-        st.write(yorum)
+    
          
       
