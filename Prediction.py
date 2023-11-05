@@ -272,19 +272,19 @@ with interface:
 
     st.subheader(body = 'Model Prediction')
     
-    with open('saved_model.pickle', 'rb') as pickled_model:
+    #with open('saved_model.pickle', 'rb') as pickled_model:
         
-        model = pickle.load(pickled_model)
+        #model = pickle.load(pickled_model)
     
-    if st.button('Predict'):
-        cars_price = model.predict(input_features)
+    #if st.button('Predict'):
+        #cars_price = model.predict(input_features)
 
-        with st.spinner('Sending input features to model...'):
-            time.sleep(2)
+        #with st.spinner('Sending input features to model...'):
+            #time.sleep(2)
 
-        st.success('Prediction is ready')
-        time.sleep(1)
-        st.markdown(f'### Car\'s estimated price is:  {cars_price} AZN')
+        #st.success('Prediction is ready')
+        #time.sleep(1)
+        #st.markdown(f'### Car\'s estimated price is:  {cars_price} AZN')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     # Yorumlar bazasına qoşulun
