@@ -85,7 +85,7 @@ nest-asyncio==1.5.5
 nltk==3.2.4
 notebook==6.4.11
 numpy==1.22.3
-openai==1.0.0
+openai==1.2.0
 opencv-python==4.5.5.64
 openpyxl==3.1.1
 packaging==21.3
