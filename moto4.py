@@ -1,7 +1,7 @@
 from PIL import Image
 import streamlit as st
-import pandas as pd
 import sklearn
+import pandas as pd
 import pickle
 import numpy as np
 import time
