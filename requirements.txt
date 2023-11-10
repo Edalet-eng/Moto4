@@ -138,7 +138,6 @@ Send2Trash==1.8.0
 setuptools-scm==7.0.5
 six==1.16.0
 sketchpy==0.0.15
-sklearn==0.0.post1
 smmap==5.0.0
 soupsieve==2.3.2.post1
 sphinx-rtd-theme==0.2.4
