@@ -30,7 +30,7 @@ import streamlit as st
 
 st.sidebar.title("Your chatbot")
 
-openai.api_key ="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"
+openai.api_key ="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"
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
