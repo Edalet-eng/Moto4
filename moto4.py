@@ -7,7 +7,7 @@ import numpy as np
 import time
 from sklearn.preprocessing import LabelEncoder
 import sqlite3
-st.image('moto4-logo.png', use_column_width=True)
+st.image('587-161.png', use_column_width=True)
 df=pd.read_csv('data.csv')
  
 def label_encoder_process(data_frame=None):
