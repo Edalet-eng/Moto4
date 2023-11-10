@@ -366,7 +366,8 @@ with interface:
         cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
         conn.commit()
         st.success("Yorumunuz uğurla əlavə edildi.")
-   
+     
+   st.button("Elan Yerləşdir")
     # Yorumlar bazasına qoşulun
    # conn = sqlite3.connect('yorumlar.db')
     #cursor = conn.cursor()
