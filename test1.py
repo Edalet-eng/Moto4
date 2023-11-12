@@ -362,7 +362,7 @@ if st.sidebar.button("Get more information!"):
         
         #model = pickle.load(pickled_model)
     
-    #if st.button('Predict'):
+    if st.button('Predict'):
         #cars_price = model.predict(input_features)
 
         #with st.spinner('Sending input features to model...'):
@@ -378,11 +378,11 @@ if st.sidebar.button("Get more information!"):
     cursor = conn.cursor()
     
     # Streamlit tətbiqini yaradın
-    st.subheader('Yorumlar ')
+    st.subheader('Comments ')
     
     # Yorum əlavə etmə formunu tərtib edin
-    yorum = st.text_area("Yorumunuzu burada daxil edin:")
-    submit = st.button("Göndər")
+    yorum = st.text_area("Enter your comment:")
+    submit = st.button("Send")
     
     # Yorum göndərildikdə
     if submit:
