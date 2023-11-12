@@ -7,6 +7,8 @@ import numpy as np
 import time
 from sklearn.preprocessing import LabelEncoder
 import sqlite3
+import openai
+
 #st.image('587-161.png', use_column_width=True)
 df=pd.read_csv('data.csv')
  
@@ -16,59 +18,19 @@ def label_encoder_process(data_frame=None):
         data_frame[i]=lb.fit_transform(data_frame[i])
     return data_frame
     
+interface = st.container()
 
 
 st.sidebar.header('Maraqlandığınız avtomobil haqqında daha çox məlumat əldə edin!')
 
 
-import openai
-import streamlit as st
 
-st.sidebar.title("Your chatbot")
 
-openai.api_key = "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"
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
-with st.sidebar.form("chat_form"):
-    for message in st.session_state.messages:
-        with st.sidebar.chat_message(message["role"]):
-            st.markdown(message["content"])
 
-    prompt = st.text_input("Say something:", key="user_input")
-    submit_button = st.form_submit_button("Enter")
 
-if submit_button:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-    with st.sidebar.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.sidebar.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-    
-    
-    
-    
-interface = st.container()
 
 with interface:
     
@@ -242,6 +204,79 @@ with interface:
         
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
+    
+
+st.sidebar.title("Your chatbot")
+
+openai.api_key = "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"
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+with st.sidebar.form("chat_form"):
+    for message in st.session_state.messages:
+        with st.sidebar.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    prompt = st.text_input("Say something:", key="user_input")
+    submit_button = st.form_submit_button("Enter")
+
+if submit_button:
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    with st.sidebar.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.sidebar.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for response in openai.ChatCompletion.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += response.choices[0].delta.get("content", "")
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+if st.sidebar.button("Send Car Info to Chatbot"):
+    # Get the selected values for marka and model
+    marka_value = marka
+    model_value = model
+    year_value = buraxılış_ili
+    engine_value = mühərrik_hecmi
+
+    # Create a message to send to the chatbot
+    car_info_message = f"{engine_value} mühərrik həcmli {year_value} ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında qısa məlumat ver."
+
+    # Send the message to the chatbot
+    st.session_state.messages.append({"role": "user", "content": car_info_message})
+    with st.sidebar.chat_message("user"):
+        st.markdown(car_info_message)
+
+    with st.sidebar.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for response in openai.ChatCompletion.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += response.choices[0].delta.get("content", "")
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
     rənglənib_encoding = {'rənglənməyib':1,'rənglənib':0}
     vuruğu_var_encoding = {'vuruğu yoxdur':1,'vuruğu var':0}
@@ -373,31 +408,3 @@ with interface:
       
     
     
-if st.sidebar.button("Send Car Info to Chatbot"):
-    # Get the selected values for marka and model
-    marka_value = marka
-    model_value = model
-
-    # Create a message to send to the chatbot
-    car_info_message = f"Qeyd edilən göstəricilərə uyğun avtomobil haqqında məlumat verş  - {marka_value}, and model is - {model_value}"
-
-    # Send the message to the chatbot
-    st.session_state.messages.append({"role": "user", "content": car_info_message})
-    with st.sidebar.chat_message("user"):
-        st.markdown(car_info_message)
-
-    with st.sidebar.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
