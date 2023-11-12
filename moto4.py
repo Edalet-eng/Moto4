@@ -366,10 +366,10 @@ if car_info_button:
     cursor = conn.cursor()
     
     # Streamlit tətbiqini yaradın
-    st.subheader('Yorumlar ')
+    st.subheader('Şərhlər')
     
     # Yorum əlavə etmə formunu tərtib edin
-    yorum = st.text_area("Yorumunuzu burada daxil edin:")
+    yorum = st.text_area("Şərh əlavə edin:")
     submit = st.button("Göndər")
     
     # Yorum göndərildikdə
@@ -377,7 +377,7 @@ if car_info_button:
         # Əlavə olunacaq yorumları bazaya yazın
         cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
         conn.commit()
-        st.success("Yorumunuz uğurla əlavə edildi.")
+        st.success("Şərhiniz uğurla əlavə edildi.")
      
    
     # Yorumlar bazasına qoşulun
