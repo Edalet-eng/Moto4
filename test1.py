@@ -144,7 +144,7 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
         
    
-    st.subheader(body = 'Avtomobil təchizatı')
+    st.subheader(body = 'Car supplies')
     
     
     lehimli_disk, abs, lyuk, yağış_sensoru,dəri_salon = st.columns(spec = [1, 1, 1, 1, 1])
@@ -247,7 +247,7 @@ if submit_button:
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
-if st.sidebar.button("Send Car Info to Chatbot"):
+if st.sidebar.button("Get more information!"):
     # Get the selected values for marka and model
     marka_value = marka
     model_value = model
