@@ -195,7 +195,7 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
  
-st.sidebar.title("Your chatbot")
+st.sidebar.title("Məsləhətçi")
 
 openai.api_key = "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"
 
@@ -210,7 +210,7 @@ with st.sidebar.form("chat_form"):
         with st.sidebar.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    prompt = st.text_input("Say something:", key="user_input")
+    prompt = st.text_input("Sual ver:", key="user_input")
     submit_button = st.form_submit_button("Enter")
     car_info_button = st.sidebar.button("Maşın haqqında məlumat al")
 if submit_button:
