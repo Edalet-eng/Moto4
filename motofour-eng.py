@@ -206,7 +206,7 @@ with interface:
 
     
 
-    st.sidebar.title("Your chatbot")
+    st.sidebar.title("Your guide")
     
     openai.api_key = "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"
     
