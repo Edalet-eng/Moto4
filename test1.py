@@ -16,13 +16,9 @@ def label_encoder_process(data_frame=None):
         data_frame[i]=lb.fit_transform(data_frame[i])
     return data_frame
     
-interface = st.container()
 
 
 st.sidebar.header('Maraqlandığınız avtomobil haqqında daha çox məlumat əldə edin!')
-
-
-
 
 
 import openai
@@ -30,7 +26,7 @@ import streamlit as st
 
 st.sidebar.title("Your chatbot")
 
-openai.api_key ="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"
+openai.api_key = "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"
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -38,35 +34,40 @@ if "openai_model" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-for message in st.session_state.messages:
-    with st.sidebar.chat_message(message["role"]):
-        st.markdown(message["content"])
+with st.sidebar.form("chat_form"):
+    for message in st.session_state.messages:
+        with st.sidebar.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-if prompt := st.sidebar.text_input("Say somethings"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.sidebar.chat_message("user"):
-        st.markdown(prompt)
+    prompt = st.text_input("Say something:", key="user_input")
+    submit_button = st.form_submit_button("Enter")
 
-    with st.sidebar.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+if submit_button:
+    if prompt.strip():  # Check if the user entered a non-empty question
+        st.session_state.messages.append({"role": "user", "content": prompt})
 
+        with st.sidebar.chat_message("user"):
+            st.markdown(prompt)
 
-
-
-
+        with st.sidebar.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response}
+    
+    
+    
+interface = st.container()
 
 with interface:
     
