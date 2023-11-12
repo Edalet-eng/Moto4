@@ -21,7 +21,7 @@ def label_encoder_process(data_frame=None):
 interface = st.container()
 
 
-st.sidebar.header('Maraqlandığınız avtomobil haqqında daha çox məlumat əldə edin!')
+st.sidebar.header('Get more information about you were interested car!')
 
 
 
@@ -64,7 +64,7 @@ with interface:
 
    
    
-    st.title(body = 'Avtomobil Özəlliklərini daxil edin')
+    st.title(body = 'AEnter Vehicle Features')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     
@@ -73,7 +73,7 @@ with interface:
     
 
     with marka:
-        marka = st.selectbox(label = 'Marka', options =df['marka'].str.capitalize().sort_values().unique().tolist())
+        marka = st.selectbox(label = 'Brand', options =df['marka'].str.capitalize().sort_values().unique().tolist())
     
     with model:
         model = st.selectbox(label = 'Model', options =df[df['marka'].str.capitalize() == marka]['model'].str.capitalize().sort_values().unique().tolist())  
@@ -84,34 +84,34 @@ with interface:
     yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu = st.columns(spec = [1, 1, 1, 1])
         
     with yanacaq_novu:
-        yanacaq_novu = st.selectbox(label = 'Yanacaq növü', options =df.yanacaq_novu.str.capitalize().unique().tolist())
+        yanacaq_novu = st.selectbox(label = 'Fuel type', options =df.yanacaq_novu.str.capitalize().unique().tolist())
     
     with ötürücü:
-        ötürücü = st.selectbox(label = 'Ötürücü', options =df.ötürücü.str.strip().str.capitalize().unique().tolist())
+        ötürücü = st.selectbox(label = 'Gear', options =df.ötürücü.str.strip().str.capitalize().unique().tolist())
 
     with ban_növü:
-        ban_növü = st.selectbox(label = 'Ban növü', options =df.ban_növü.str.capitalize().unique().tolist())
+        ban_növü = st.selectbox(label = 'Ban type', options =df.ban_növü.str.capitalize().unique().tolist())
         
     with sürətlər_qutusu:
-        sürətlər_qutusu = st.selectbox(label = 'Sürətlər qutusu', options = df.sürətlər_qutusu.str.strip().str.capitalize().unique().tolist())
+        sürətlər_qutusu = st.selectbox(label = 'Transmission', options = df.sürətlər_qutusu.str.strip().str.capitalize().unique().tolist())
         
         
     
-    yürüş = st.number_input(label = 'Yürüş (km)', value = 0, step = 1000 )
+    yürüş = st.number_input(label = 'Miles (km)', value = 0, step = 1000 )
     button_text = 'Dəyəri göndərin'
  
     st.markdown(body = '***')
     
-    buraxılış_ili = st.slider(label='İl',min_value = int(df.buraxılış_ili.min()),
+    buraxılış_ili = st.slider(label='Year',min_value = int(df.buraxılış_ili.min()),
                               max_value= int(df.buraxılış_ili.max()),value = int(df.buraxılış_ili.mean()))
         
     rəng, hansı_bazar_üçün_yığılıb = st.columns(spec = [1, 1])
     
     with rəng:
-         rəng = st.selectbox(label = 'Rəng', options =df.rəng.str.strip().str.capitalize().sort_values().unique().tolist())
+         rəng = st.selectbox(label = 'Color', options =df.rəng.str.strip().str.capitalize().sort_values().unique().tolist())
             
     with hansı_bazar_üçün_yığılıb:
-         hansı_bazar_üçün_yığılıb = st.selectbox(label = 'Hansı bazar üçün yığılıb', options =df.hansı_bazar_üçün_yığılıb.str.capitalize().sort_values().unique().tolist())
+         hansı_bazar_üçün_yığılıb = st.selectbox(label = 'For which market it is assembled', options =df.hansı_bazar_üçün_yığılıb.str.capitalize().sort_values().unique().tolist())
             
     st.markdown(body = '***')
     
@@ -119,26 +119,26 @@ with interface:
     mühərrik_hecmi, mühərrik_gucu = st.columns(spec = [1, 1])
     
     with mühərrik_hecmi:
-        mühərrik_hecmi = st.number_input(label = 'Mühərrikin həcmi (sm³)', value = 0, step = 50 )
+        mühərrik_hecmi = st.number_input(label = 'Engine capacity (sm³)', value = 0, step = 50 )
         button_text = 'Send values'
     
     with mühərrik_gucu:
-        mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = 0, step = 1 )
+        mühərrik_gucu = st.number_input(label = 'Engine power, a.g.', value = 0, step = 1 )
         button_text = 'Send values' 
 
         
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
      
-    st.subheader(body = 'Vəziyyət')
+    st.subheader(body = 'The situation')
     
     rənglənib, vuruğu_var = st.columns(spec = [1, 1])
     
     with rənglənib:
-        rənglənib = st.radio(label = 'Rənglənib? ', options = ['rənglənib', 'rənglənməyib'], horizontal = True)
+        rənglənib = st.radio(label = 'İs it colored? ', options = ['rənglənib', 'rənglənməyib'], horizontal = True)
         
     with vuruğu_var:
-        vuruğu_var = st.radio(label = 'Vuruğu var? ', options = ['vuruğu var', 'vuruğu yoxdur'], horizontal = True)
+        vuruğu_var = st.radio(label = 'Does it have a stroke? ', options = ['vuruğu var', 'vuruğu yoxdur'], horizontal = True)
     
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
@@ -150,7 +150,7 @@ with interface:
     lehimli_disk, abs, lyuk, yağış_sensoru,dəri_salon = st.columns(spec = [1, 1, 1, 1, 1])
    
     with lehimli_disk:
-        lehimli_disk = st.checkbox(label = 'Yüngül lehimli disklər')
+        lehimli_disk = st.checkbox(label = 'Alloy wheels')
         
     with abs:
         abs = st.checkbox(label = 'ABS')
@@ -159,10 +159,10 @@ with interface:
         lyuk = st.checkbox(label = 'Lyuk')
         
     with yağış_sensoru:
-        yağış_sensoru = st.checkbox(label = 'Yağış sensoru')
+        yağış_sensoru = st.checkbox(label = 'Rain sensor')
         
     with dəri_salon:
-        dəri_salon = st.checkbox(label = 'Dəri salon')
+        dəri_salon = st.checkbox(label = 'Leather salon')
         
     
     st.markdown(body = '***')
@@ -172,16 +172,16 @@ with interface:
     mərkəzi_qapanma,park_radarı, kondisioner, oturacaqların_isidilməsi,  = st.columns(spec = [1, 1, 1, 1])
     
     with mərkəzi_qapanma:
-        mərkəzi_qapanma = st.checkbox(label = 'Mərkəzi qapanma')
+        mərkəzi_qapanma = st.checkbox(label = 'Central locking')
     
     with park_radarı:
-        park_radarı = st.checkbox(label = 'Park radarı')
+        park_radarı = st.checkbox(label = 'Parking radar')
         
     with kondisioner:
-        kondisioner = st.checkbox(label = 'Kondisioner')
+        kondisioner = st.checkbox(label = 'Air conditioning')
     
     with oturacaqların_isidilməsi:
-        oturacaqların_isidilməsi = st.checkbox(label = 'Oturacaqların isidilməsi')
+        oturacaqların_isidilməsi = st.checkbox(label = 'Seat heating')
         
         
     st.markdown(body = '***')
@@ -190,16 +190,16 @@ with interface:
     ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası = st.columns(spec = [1, 1, 1, 1])
     
     with ksenon_lampalar:
-        ksenon_lampalar = st.checkbox(label = 'Ksenon lampalar')
+        ksenon_lampalar = st.checkbox(label = 'Xenon lamps')
     
     with arxa_görüntü_kamerası:
-        arxa_görüntü_kamerası = st.checkbox(label = 'Arxa görüntü kamerası')
+        arxa_görüntü_kamerası = st.checkbox(label = 'Rear view camera')
         
     with yan_pərdələr:
-        yan_pərdələr = st.checkbox(label = 'Yan pərdələr')
+        yan_pərdələr = st.checkbox(label = 'Side curtains')
     
     with oturacaqların_ventilyasiyası:
-        oturacaqların_ventilyasiyası = st.checkbox(label = 'Oturacaqların ventilyasiyası')
+        oturacaqların_ventilyasiyası = st.checkbox(label = 'Seat ventilation')
         
         
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
