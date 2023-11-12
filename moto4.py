@@ -266,6 +266,8 @@ with interface:
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+ 
     rənglənib_encoding = {'rənglənməyib':1,'rənglənib':0}
     vuruğu_var_encoding = {'vuruğu yoxdur':1,'vuruğu var':0}
        
