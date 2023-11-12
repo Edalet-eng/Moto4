@@ -208,7 +208,7 @@ with interface:
 
     st.sidebar.title("Your guide")
     
-    openai.api_key = "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"
+    openai.api_key = "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"
     
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
