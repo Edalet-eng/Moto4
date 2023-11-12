@@ -64,7 +64,7 @@ with interface:
 
    
    
-    st.title(body = 'AEnter Vehicle Features')
+    st.title(body = 'Enter Vehicle Features')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     
