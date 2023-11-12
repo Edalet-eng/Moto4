@@ -195,77 +195,77 @@ with interface:
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
  
-st.sidebar.title("Məsləhətçi")
-
-openai.api_key = "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"
-
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-with st.sidebar.form("chat_form"):
-    for message in st.session_state.messages:
-        with st.sidebar.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    prompt = st.text_input("Sual ver:", key="user_input")
-    submit_button = st.form_submit_button("Daxil et")
-    car_info_button = st.sidebar.button("Maşın haqqında məlumat al")
-if submit_button:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-    with st.sidebar.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.sidebar.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-
-if car_info_button:
-    # Get the selected values for marka and model
-    marka_value = marka
-    model_value = model
-    year_value = buraxılış_ili
-    engine_value = mühərrik_hecmi
-
-    # Create a message to send to the chatbot
-    car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında qısa məlumat ver."
-
-    # Send the message to the chatbot
-    st.session_state.messages.append({"role": "user", "content": car_info_message})
-    with st.sidebar.chat_message("user"):
-        st.markdown(car_info_message)
-
-    with st.sidebar.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.sidebar.title("Məsləhətçi")
+    
+    openai.api_key = "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"
+    
+    if "openai_model" not in st.session_state:
+        st.session_state["openai_model"] = "gpt-3.5-turbo"
+    
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    with st.sidebar.form("chat_form"):
+        for message in st.session_state.messages:
+            with st.sidebar.chat_message(message["role"]):
+                st.markdown(message["content"])
+    
+        prompt = st.text_input("Sual ver:", key="user_input")
+        submit_button = st.form_submit_button("Daxil et")
+        car_info_button = st.sidebar.button("Maşın haqqında məlumat al")
+    if submit_button:
+        st.session_state.messages.append({"role": "user", "content": prompt})
+    
+        with st.sidebar.chat_message("user"):
+            st.markdown(prompt)
+    
+        with st.sidebar.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
+    
+    
+    if car_info_button:
+        # Get the selected values for marka and model
+        marka_value = marka
+        model_value = model
+        year_value = buraxılış_ili
+        engine_value = mühərrik_hecmi
+    
+        # Create a message to send to the chatbot
+        car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında qısa məlumat ver."
+    
+        # Send the message to the chatbot
+        st.session_state.messages.append({"role": "user", "content": car_info_message})
+        with st.sidebar.chat_message("user"):
+            st.markdown(car_info_message)
+    
+        with st.sidebar.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
     rənglənib_encoding = {'rənglənməyib':1,'rənglənib':0}
     vuruğu_var_encoding = {'vuruğu yoxdur':1,'vuruğu var':0}
        
