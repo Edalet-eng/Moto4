@@ -54,7 +54,7 @@ with interface:
 
    
    
-    st.title(body = 'Avtomobil Özəlliklərini daxil edin')
+    st.title(body = 'Avtomobil özəlliklərini daxil edin')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     
