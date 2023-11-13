@@ -244,7 +244,7 @@ with interface:
         engine_value = mühərrik_hecmi
     
         # Create a message to send to the chatbot
-        car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında qısa məlumat ver."
+        car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
     
         # Send the message to the chatbot
         st.session_state.messages.append({"role": "user", "content": car_info_message})
