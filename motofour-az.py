@@ -212,7 +212,7 @@ with interface:
     
         prompt = st.text_input("Sual ver:", key="user_input")
         submit_button = st.form_submit_button("Daxil et")
-        car_info_button = st.sidebar.button("Maşın haqqında məlumat al")
+        car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
         st.session_state.messages.append({"role": "user", "content": prompt})
     
