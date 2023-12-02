@@ -367,7 +367,7 @@ with interface:
             else:
                 st.success('Hesablanır')
                 time.sleep(1)
-                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(model.predict(input_features))} AZN')
+                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(np.int(model.predict(input_features)))} AZN')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
             # Add more details or actions if necessary
