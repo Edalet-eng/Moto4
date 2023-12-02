@@ -341,10 +341,10 @@ with interface:
         'arxa_görüntü_kamerası': [arxa_görüntü_kamerası2],
         'yan_pərdələr': [yan_pərdələr2],
         'oturacaqların_ventilyasiyası': [oturacaqların_ventilyasiyası2],
-        'buraxılış_ili': [buraxılış_ili2],
-        'yürüş': [yürüş2],
-        'mühərrik_hecmi': [mühərrik_hecmi2],
-        'mühərrik_gucu': [mühərrik_gucu2]
+        'buraxılış_ili': [buraxılış_ili],
+        'yürüş': [yürüş],
+        'mühərrik_hecmi': [mühərrik_hecmi],
+        'mühərrik_gucu': [mühərrik_gucu]
         
     })
     
