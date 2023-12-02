@@ -373,50 +373,50 @@ with interface:
             # Add more details or actions if necessary
 
     
-#     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
+    st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     
 
     
     
-#     # SQLite veritabanı ilə əlaqə yaratmaq
-#     engine = create_engine('sqlite:///comment.db', echo=True)
+     # SQLite veritabanı ilə əlaqə yaratmaq
+     engine = create_engine('sqlite:///comment.db', echo=True)
 
-#     # Modeli təyin etmək
-#     Base = declarative_base()
-#     class Comment(Base):
-#         __tablename__ = 'comment'
-#         id = Column(Integer, primary_key=True)
-#         comment = Column(String)
+     # Modeli təyin etmək
+     Base = declarative_base()
+     class Comment(Base):
+         __tablename__ = 'comment'
+         id = Column(Integer, primary_key=True)
+         comment = Column(String)
         
 
-#     # Veritabanını yaratmaq üçün
-#     metadata = MetaData()
-#     cars_table = Table('comment', metadata,
-#                        Column('id', Integer, primary_key=True),
-#                        Column('comment', String))
-#     metadata.create_all(engine)
+     # Veritabanını yaratmaq üçün
+     metadata = MetaData()
+     cars_table = Table('comment', metadata,
+                        Column('id', Integer, primary_key=True),
+                        Column('comment', String))
+     metadata.create_all(engine)
 
     
-#     st.title('Şərhlər')
+     st.title('Şərhlər')
     
-#     # Yorum əlavə etmə formunu tərtib edin
-#     yorum = st.text_area("Şərhinizi daxil edin:")
-#     submit = st.button("Göndər")
+     # Yorum əlavə etmə formunu tərtib edin
+     yorum = st.text_area("Şərhinizi daxil edin:")
+     submit = st.button("Göndər")
     
     
-#     def elan_əlavə_et(yorum):
-#         new_comment = Comment(comment=yorum)
-#         session = Session(bind=engine)
-#         session.add(new_comment)
-#         session.commit ()
-#         session.close()
+     def elan_əlavə_et(yorum):
+         new_comment = Comment(comment=yorum)
+         session = Session(bind=engine)
+         session.add(new_comment)
+         session.commit ()
+         session.close()
 
 
-#     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-#     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-#     if submit:
-#         elan_əlavə_et(yorum)
-#         st.success("Şərh əlavə edildi!")
+     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
+     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
+     if submit:
+         elan_əlavə_et(yorum)
+         st.success("Şərh əlavə edildi!")
         
 
  
