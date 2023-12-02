@@ -1,26 +1,23 @@
 from PIL import Image
 import streamlit as st
-import sklearn
 import pandas as pd
 import pickle
 import numpy as np
-import time
-import openai
-from sklearn.preprocessing import LabelEncoder
 import sqlite3
+import time
+from sklearn.preprocessing import LabelEncoder
+import sklearn
+import streamlit as st
+from sqlalchemy import create_engine, Column, Integer, String, MetaData, Table
+from sqlalchemy.orm import declarative_base, Session
 st.image('587-161.png', use_column_width=True)
-df=pd.read_csv('data.csv')
+
+df=pd.read_csv('lastdata.csv')
  
-def label_encoder_process(data_frame=None):
-    for i in data_frame.columns:
-        lb = LabelEncoder()
-        data_frame[i]=lb.fit_transform(data_frame[i])
-    return data_frame
+
     
 interface = st.container()
 
-
-st.sidebar.header('Maraqlandığınız avtomobil haqqında daha çox məlumat əldə edin!')
 
 with interface:
     
@@ -54,7 +51,7 @@ with interface:
 
    
    
-    st.title(body = 'Avtomobil özəlliklərini daxil edin')
+    st.title(body = 'Avtomobilin özəlliklərini daxil edin')
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
     
@@ -194,80 +191,13 @@ with interface:
         
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
 
- 
-    st.sidebar.title("Məsləhətçi")
-    
-    openai.api_key = "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"
-    
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-3.5-turbo"
-    
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-    
-    with st.sidebar.form("chat_form"):
-        for message in st.session_state.messages:
-            with st.sidebar.chat_message(message["role"]):
-                st.markdown(message["content"])
-    
-        prompt = st.text_input("Sual ver:", key="user_input")
-        submit_button = st.form_submit_button("Daxil et")
-        car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
-    if submit_button:
-        st.session_state.messages.append({"role": "user", "content": prompt})
-    
-        with st.sidebar.chat_message("user"):
-            st.markdown(prompt)
-    
-        with st.sidebar.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            for response in openai.ChatCompletion.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
-    
-    if car_info_button:
-        # Get the selected values for marka and model
-        marka_value = marka
-        model_value = model
-        year_value = buraxılış_ili
-        engine_value = mühərrik_hecmi
-    
-        # Create a message to send to the chatbot
-        car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
-    
-        # Send the message to the chatbot
-        st.session_state.messages.append({"role": "user", "content": car_info_message})
-        with st.sidebar.chat_message("user"):
-            st.markdown(car_info_message)
-    
-        with st.sidebar.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            for response in openai.ChatCompletion.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
 
- 
+  
+        
+        
+        
+        
+        
     rənglənib_encoding = {'rənglənməyib':1,'rənglənib':0}
     vuruğu_var_encoding = {'vuruğu yoxdur':1,'vuruğu var':0}
        
@@ -285,7 +215,7 @@ with interface:
     
 
 
-    marka = marka_mapping[marka]
+    marka2 = marka_mapping[marka]
     model = model_mapping[model]
     yanacaq_novu = yanacaq_novu_mapping[yanacaq_novu]
     ötürücü = ötürücü_mapping[ötürücü]
@@ -314,7 +244,7 @@ with interface:
 
     
     input_features = pd.DataFrame({
-        'marka': [marka],
+        'marka': [marka2],
         'model': [model],
         'ban_növü': [ban_növü],
         'rəng': [rəng],
@@ -346,53 +276,72 @@ with interface:
     
     
 
-    st.subheader(body = 'Qiymətin proqnozlaşdırılması')
+    st.subheader(body = 'Model proqnozu')
     
-    #with open('saved_model.pickle', 'rb') as pickled_model:
-        
-        #model = pickle.load(pickled_model)
-    
-    #if st.button('Təxmin et'):
-        #cars_price = model.predict(input_features)
 
-        #with st.spinner('Sending input features to model...'):
-            #time.sleep(2)
+    # try:
+    #     with open('saved_model.pickle', 'rb') as pickled_model:
+    #         model = pickle.load(pickled_model)
+    # except Exception as e:
+    #     st.error(f"Yanlış əməliyyat: {e}")
+    #     # Add more details or actions if necessary
 
-        #st.success('Prediction is ready')
-        #time.sleep(1)
-        #st.markdown(f'### Car\'s estimated price is:  {cars_price} AZN')
+    # if st.button('Proqnozlaşdır'):
+    #     try:
+    #         if df[df['marka'] == marka_mapping[marka]]['marka'].count() < 10:
+    #             st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
+    #         else:
+    #             st.success('Hesablanır')
+    #             time.sleep(1)
+    #             st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {model.predict(input_features)} AZN')
+    #     except Exception as e:
+    #         st.error(f"Yanlış əməliyyat: {e}")
+    #         # Add more details or actions if necessary
+
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    # Yorumlar bazasına qoşulun
-    conn = sqlite3.connect('yorumlar.db')
-    cursor = conn.cursor()
     
-    # Streamlit tətbiqini yaradın
-    st.subheader('Şərhlər')
+
+    
+    
+    # SQLite veritabanı ilə əlaqə yaratmaq
+    engine = create_engine('sqlite:///comment.db', echo=True)
+
+    # Modeli təyin etmək
+    Base = declarative_base()
+    class Comment(Base):
+        __tablename__ = 'comment'
+        id = Column(Integer, primary_key=True)
+        comment = Column(String)
+        
+
+    # Veritabanını yaratmaq üçün
+    metadata = MetaData()
+    cars_table = Table('comment', metadata,
+                       Column('id', Integer, primary_key=True),
+                       Column('comment', String))
+    metadata.create_all(engine)
+
+    
+    st.title('Şərhlər')
     
     # Yorum əlavə etmə formunu tərtib edin
-    yorum = st.text_area("Şərh əlavə edin:")
+    yorum = st.text_area("Şərhinizi daxil edin:")
     submit = st.button("Göndər")
     
-    # Yorum göndərildikdə
+    
+    def elan_əlavə_et(yorum):
+        new_comment = Comment(comment=yorum)
+        session = Session(bind=engine)
+        session.add(new_comment)
+        session.commit ()
+        session.close()
+
+
+    # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
+    # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if submit:
-        # Əlavə olunacaq yorumları bazaya yazın
-        cursor.execute("INSERT INTO yorumlar (yorum) VALUES (?)", (yorum,))
-        conn.commit()
-        st.success("Şərhiniz uğurla əlavə edildi.")
-     
-   
-    # Yorumlar bazasına qoşulun
-   # conn = sqlite3.connect('yorumlar.db')
-    #cursor = conn.cursor()
-    
-    # SQL sorğusu ilə yorumları əldə edin
-    #cursor.execute("SELECT * FROM yorumlar")
-   # yorumlar = cursor.fetchall()
-    
-    # Yorumlar bazası ilə işiniz bitdikdə əlaqəni bağlayın
-    conn.close()
-    
-    
-         
-      
+        elan_əlavə_et(yorum)
+        st.success("Şərh əlavə edildi!")
+
+ 
