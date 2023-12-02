@@ -1,5 +1,6 @@
 from PIL import Image
 import streamlit as st
+import openai
 import pandas as pd
 import pickle
 import numpy as np
@@ -193,6 +194,79 @@ with interface:
 
 
   
+
+
+    st.sidebar.title("Məsləhətçi")
+    
+    openai.api_key = "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"
+    
+    if "openai_model" not in st.session_state:
+        st.session_state["openai_model"] = "gpt-3.5-turbo"
+    
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    with st.sidebar.form("chat_form"):
+        for message in st.session_state.messages:
+            with st.sidebar.chat_message(message["role"]):
+                st.markdown(message["content"])
+    
+        prompt = st.text_input("Sual ver:", key="user_input")
+        submit_button = st.form_submit_button("Daxil et")
+        car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
+    if submit_button:
+        st.session_state.messages.append({"role": "user", "content": prompt})
+    
+        with st.sidebar.chat_message("user"):
+            st.markdown(prompt)
+    
+        with st.sidebar.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
+    
+    
+    if car_info_button:
+        # Get the selected values for marka and model
+        marka_value = marka
+        model_value = model
+        year_value = buraxılış_ili
+        engine_value = mühərrik_hecmi
+    
+        # Create a message to send to the chatbot
+        car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
+    
+        # Send the message to the chatbot
+        st.session_state.messages.append({"role": "user", "content": car_info_message})
+        with st.sidebar.chat_message("user"):
+            st.markdown(car_info_message)
+    
+        with st.sidebar.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in openai.ChatCompletion.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            ):
+                full_response += response.choices[0].delta.get("content", "")
+                message_placeholder.markdown(full_response + "▌")
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
         
         
         
@@ -216,61 +290,61 @@ with interface:
 
 
     marka2 = marka_mapping[marka]
-    model = model_mapping[model]
-    yanacaq_novu = yanacaq_novu_mapping[yanacaq_novu]
-    ötürücü = ötürücü_mapping[ötürücü]
-    ban_növü = ban_növü_mapping[ban_növü]
-    sürətlər_qutusu = sürətlər_qutusu_mapping[sürətlər_qutusu]
-    rəng = rəng_mapping[rəng]
-    hansı_bazar_üçün_yığılıb = hansı_bazar_mapping[hansı_bazar_üçün_yığılıb]
-    rənglənib = rənglənib_encoding[rənglənib]
-    vuruğu_var = vuruğu_var_encoding[vuruğu_var]
+    model2 = model_mapping[model]
+    yanacaq_novu2 = yanacaq_novu_mapping[yanacaq_novu]
+    ötürücü2 = ötürücü_mapping[ötürücü]
+    ban_növü2 = ban_növü_mapping[ban_növü]
+    sürətlər_qutusu2 = sürətlər_qutusu_mapping[sürətlər_qutusu]
+    rəng2 = rəng_mapping[rəng]
+    hansı_bazar_üçün_yığılıb2 = hansı_bazar_mapping[hansı_bazar_üçün_yığılıb]
+    rənglənib2 = rənglənib_encoding[rənglənib]
+    vuruğu_var2 = vuruğu_var_encoding[vuruğu_var]
     
-    lehimli_disk = int(lehimli_disk)
-    abs = int(abs)
-    lyuk = int(lyuk)
-    yağış_sensoru = int(yağış_sensoru)
-    mərkəzi_qapanma = int(mərkəzi_qapanma)
-    park_radarı = int(park_radarı)
-    kondisioner = int(kondisioner)
-    oturacaqların_isidilməsi = int(oturacaqların_isidilməsi)
-    dəri_salon = int(dəri_salon)
-    ksenon_lampalar = int(ksenon_lampalar)
-    arxa_görüntü_kamerası = int(arxa_görüntü_kamerası)
-    yan_pərdələr = int(yan_pərdələr)
-    oturacaqların_ventilyasiyası = int(oturacaqların_ventilyasiyası)
+    lehimli_disk2 = int(lehimli_disk)
+    abs2 = int(abs)
+    lyuk2 = int(lyuk)
+    yağış_sensoru2 = int(yağış_sensoru)
+    mərkəzi_qapanma2 = int(mərkəzi_qapanma)
+    park_radarı2 = int(park_radarı)
+    kondisioner2 = int(kondisioner)
+    oturacaqların_isidilməsi2 = int(oturacaqların_isidilməsi)
+    dəri_salon2 = int(dəri_salon)
+    ksenon_lampalar2 = int(ksenon_lampalar)
+    arxa_görüntü_kamerası2 = int(arxa_görüntü_kamerası)
+    yan_pərdələr2 = int(yan_pərdələr)
+    oturacaqların_ventilyasiyası2 = int(oturacaqların_ventilyasiyası)
 
        
 
     
     input_features = pd.DataFrame({
         'marka': [marka2],
-        'model': [model],
-        'ban_növü': [ban_növü],
-        'rəng': [rəng],
-        'sürətlər_qutusu': [sürətlər_qutusu],
-        'ötürücü': [ötürücü],
-        'hansı_bazar_üçün_yığılıb': [hansı_bazar_üçün_yığılıb],
-        'yanacaq_novu': [yanacaq_novu],
-        'vuruğu_var': [vuruğu_var],
-        'rənglənib': [rənglənib],
-        'lehimli_disk': [lehimli_disk],
-        'abs': [abs],
-        'lyuk': [lyuk],
-        'yağış_sensoru': [yağış_sensoru],
-        'mərkəzi_qapanma': [mərkəzi_qapanma],
-        'park_radarı': [park_radarı],
-        'kondisioner': [kondisioner],
-        'oturacaqların_isidilməsi': [oturacaqların_isidilməsi],
-        'dəri_salon': [dəri_salon],
-        'ksenon_lampalar': [ksenon_lampalar],
-        'arxa_görüntü_kamerası': [arxa_görüntü_kamerası],
-        'yan_pərdələr': [yan_pərdələr],
-        'oturacaqların_ventilyasiyası': [oturacaqların_ventilyasiyası],
-        'buraxılış_ili': [buraxılış_ili],
-        'yürüş': [yürüş],
-        'mühərrik_hecmi': [mühərrik_hecmi],
-        'mühərrik_gucu': [mühərrik_gucu]
+        'model': [model2],
+        'ban_növü': [ban_növü2],
+        'rəng': [rəng2],
+        'sürətlər_qutusu': [sürətlər_qutusu2],
+        'ötürücü': [ötürücü2],
+        'hansı_bazar_üçün_yığılıb': [hansı_bazar_üçün_yığılıb2],
+        'yanacaq_novu': [yanacaq_novu2],
+        'vuruğu_var': [vuruğu_var2],
+        'rənglənib': [rənglənib2],
+        'lehimli_disk': [lehimli_disk2],
+        'abs': [abs2],
+        'lyuk': [lyuk2],
+        'yağış_sensoru': [yağış_sensoru2],
+        'mərkəzi_qapanma': [mərkəzi_qapanma2],
+        'park_radarı': [park_radarı2],
+        'kondisioner': [kondisioner2],
+        'oturacaqların_isidilməsi': [oturacaqların_isidilməsi2],
+        'dəri_salon': [dəri_salon2],
+        'ksenon_lampalar': [ksenon_lampalar2],
+        'arxa_görüntü_kamerası': [arxa_görüntü_kamerası2],
+        'yan_pərdələr': [yan_pərdələr2],
+        'oturacaqların_ventilyasiyası': [oturacaqların_ventilyasiyası2],
+        'buraxılış_ili': [buraxılış_ili2],
+        'yürüş': [yürüş2],
+        'mühərrik_hecmi': [mühərrik_hecmi2],
+        'mühərrik_gucu': [mühərrik_gucu2]
         
     })
     
@@ -343,5 +417,6 @@ with interface:
     if submit:
         elan_əlavə_et(yorum)
         st.success("Şərh əlavə edildi!")
+        
 
  
