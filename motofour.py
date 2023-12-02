@@ -353,24 +353,24 @@ with interface:
     st.subheader(body = 'Model proqnozu')
     
 
-    try:
-        with open('saved_model.pickle', 'rb') as pickled_model:
-            model = pickle.load(pickled_model)
-    except Exception as e:
-        st.error(f"Yanlış əməliyyat: {e}")
-        # Add more details or actions if necessary
+    # try:
+    #     with open('saved_model.pickle', 'rb') as pickled_model:
+    #         model = pickle.load(pickled_model)
+    # except Exception as e:
+    #     st.error(f"Yanlış əməliyyat: {e}")
+    #     # Add more details or actions if necessary
 
-    if st.button('Proqnozlaşdır'):
-        try:
-            if df[df['marka'] == marka_mapping[marka]]['marka'].count() < 10:
-                st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
-            else:
-                st.success('Hesablanır')
-                time.sleep(1)
-                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {model.predict(input_features)} AZN')
-        except Exception as e:
-            st.error(f"Yanlış əməliyyat: {e}")
-            # Add more details or actions if necessary
+    # if st.button('Proqnozlaşdır'):
+    #     try:
+    #         if df[df['marka'] == marka_mapping[marka]]['marka'].count() < 10:
+    #             st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
+    #         else:
+    #             st.success('Hesablanır')
+    #             time.sleep(1)
+    #             st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {model.predict(input_features)} AZN')
+    #     except Exception as e:
+    #         st.error(f"Yanlış əməliyyat: {e}")
+    #         # Add more details or actions if necessary
 
     
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
