@@ -411,7 +411,7 @@ with interface:
         arxa_görüntü_kamerası = Column(String)
         yan_pərdələr = Column(String)
         oturacaqların_ventilyasiyası = Column(String)
-        qiymet = Column(Integer)
+        qiymet = Column(Float)
         
 
     # Veritabanını yaratmaq üçün
@@ -445,7 +445,7 @@ with interface:
                        Column('arxa_görüntü_kamerası', String),
                        Column('yan_pərdələr', String),
                        Column('oturacaqların_ventilyasiyası', String),
-                       Column('qiymet', Integer))
+                       Column('qiymet', Float))
     metadata.create_all(engine)
 
     # Streamlit tətbiqindən gələn məlumatları veritabanına əlavə etmək üçün funksiya
