@@ -11,7 +11,7 @@ import sklearn
 import streamlit as st
 from sqlalchemy import create_engine, Column, Integer, String, Float, MetaData, Table
 from sqlalchemy.orm import declarative_base, Session
-#st.image('587-161.png', use_column_width=True)
+st.image('587-161.png', use_column_width=True)
 
 df=pd.read_csv('lastdata.csv')
  
@@ -430,7 +430,10 @@ with interface:
         st.error(f"Yanlış əməliyyat: {e}")
         # Add more details or actions if necessary
 
-    if st.button('Proqnozlaşdır'):
+        
+        
+    button1,button2=st.columns(2)
+    if button1.button('Proqnozlaşdır'):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
@@ -454,7 +457,7 @@ with interface:
         session.commit ()
         session.close()
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-    if st.button("Elan Əlavə Et"):
+    if button2.button("Elan Əlavə Et"):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
@@ -467,6 +470,19 @@ with interface:
         
 
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     # SQLite veritabanı ilə əlaqə yaratmaq
@@ -495,7 +511,7 @@ with interface:
     submit = st.button("Göndər")
    
    
-    def elan_əlavə_et(yorum):
+    def yorum_elave_et(yorum):
         new_comment = Comment(comment=yorum)
         session = Session(bind=engine)
         session.add(new_comment)
@@ -506,7 +522,7 @@ with interface:
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if submit:
-        elan_əlavə_et(yorum)
+        yorum_elave_et(yorum)
         st.success("Şərh əlavə edildi!")
  
 
