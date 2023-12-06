@@ -191,9 +191,14 @@ with interface:
         
         
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
+    
+    
+    elave_melumat = st.text_area(
+    "Avtomobiliniz haqqında əlavə qeydlər yazın")
+    
+    st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
+    
 
-
-  
 
 
     st.sidebar.title("Məsləhətçi")
@@ -383,6 +388,7 @@ with interface:
         arxa_görüntü_kamerası = Column(String)
         yan_pərdələr = Column(String)
         oturacaqların_ventilyasiyası = Column(String)
+        elave_melumat = Column(String)
         qiymet = Column(Float)
         
 
@@ -417,6 +423,7 @@ with interface:
                        Column('arxa_görüntü_kamerası', String),
                        Column('yan_pərdələr', String),
                        Column('oturacaqların_ventilyasiyası', String),
+                       Column('elave_melumat' , String),
                        Column('qiymet', Float))
     metadata.create_all(engine)
 
@@ -450,8 +457,8 @@ with interface:
     qiymet = np.round(int(pred_model.predict(input_features)),-2)    
 
     # Streamlit tətbiqindən gələn məlumatları veritabanına əlavə etmək üçün funksiya
-    def elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet):
-        new_car = Car(marka=marka, model=model, yanacaq_novu=yanacaq_novu, ötürücü=ötürücü, ban_növü=ban_növü, sürətlər_qutusu=sürətlər_qutusu, yürüş=yürüş, buraxılış_ili=buraxılış_ili, rəng=rəng, hansı_bazar_üçün_yığılıb=hansı_bazar_üçün_yığılıb, mühərrik_hecmi=mühərrik_hecmi, mühərrik_gucu=mühərrik_gucu, rənglənib=rənglənib, vuruğu_var=vuruğu_var, lehimli_disk=lehimli_disk, abs=abs, lyuk=lyuk, yağış_sensoru=yağış_sensoru, dəri_salon=dəri_salon, mərkəzi_qapanma=mərkəzi_qapanma, park_radarı=park_radarı, kondisioner=kondisioner, oturacaqların_isidilməsi=oturacaqların_isidilməsi, ksenon_lampalar=ksenon_lampalar, arxa_görüntü_kamerası=arxa_görüntü_kamerası, yan_pərdələr= yan_pərdələr, oturacaqların_ventilyasiyası=oturacaqların_ventilyasiyası,qiymet=qiymet)
+    def elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,elave_melumat,qiymet):
+        new_car = Car(marka=marka, model=model, yanacaq_novu=yanacaq_novu, ötürücü=ötürücü, ban_növü=ban_növü, sürətlər_qutusu=sürətlər_qutusu, yürüş=yürüş, buraxılış_ili=buraxılış_ili, rəng=rəng, hansı_bazar_üçün_yığılıb=hansı_bazar_üçün_yığılıb, mühərrik_hecmi=mühərrik_hecmi, mühərrik_gucu=mühərrik_gucu, rənglənib=rənglənib, vuruğu_var=vuruğu_var, lehimli_disk=lehimli_disk, abs=abs, lyuk=lyuk, yağış_sensoru=yağış_sensoru, dəri_salon=dəri_salon, mərkəzi_qapanma=mərkəzi_qapanma, park_radarı=park_radarı, kondisioner=kondisioner, oturacaqların_isidilməsi=oturacaqların_isidilməsi, ksenon_lampalar=ksenon_lampalar, arxa_görüntü_kamerası=arxa_görüntü_kamerası, yan_pərdələr= yan_pərdələr, oturacaqların_ventilyasiyası=oturacaqların_ventilyasiyası,elave_melumat=elave_melumat,qiymet=qiymet)
         session = Session(bind=engine)
         session.add(new_car)
         session.commit ()
@@ -462,7 +469,7 @@ with interface:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
-                elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet)
+                elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,elave_melumat,qiymet)
                 st.success("Elan əlavə edildi!")
                 
         except Exception as e:
