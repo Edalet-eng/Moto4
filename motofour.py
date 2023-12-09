@@ -453,7 +453,7 @@ with interface:
             st.success("Şərh əlavə edildi!")
             
 #məsləhətçi bot            
-    if selected == 'Məsləhətçi':
+    if selected == 'Məsləhətçi    ':
     
         openai.api_key = "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"
 
