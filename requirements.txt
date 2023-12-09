@@ -146,7 +146,7 @@ sphinx-rtd-theme==0.2.4
 stack-data==0.2.0
 statsmodels==0.13.5
 streamlit==1.27.2
-streamlit_option_menu==0.3.6
+streamlit_option_menu==0.3
 svg.path==6.2
 svgpathtools==1.5.1
 svgwrite==1.4.3
