@@ -377,7 +377,7 @@ with interface:
 
 
         button1,button2=st.columns(2)
-        if button1.button('Proqnozlaşdır'):
+        #if button1.button('Proqnozlaşdır'):
             # try:
             #     if df[df['model'] == model_mapping[model]]['model'].count() < 7:
             #         st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
