@@ -79,9 +79,10 @@ with interface:
     
 
 
-    with st.spinner('Solda  ' + '>' +   '  tıklayaraq məsləhətçi botdan istifadə edə bilərsiniz!'):
+    if st.spinner('Solda  ' + '>' +   '  tıklayaraq məsləhətçi botdan istifadə edə bilərsiniz!'):
         time.sleep(3)
         st.success('System istifadəyə hazırdır!')
+    else: pass
 
     st.title('Avtomobilin özəlliklərini daxil et')
 
