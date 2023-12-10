@@ -14,7 +14,9 @@ from sqlalchemy.orm import declarative_base, Session
 #st.image('587-161.png', use_column_width=True)
 
 df=pd.read_csv('lastdata.csv')
-st.set_page_config(layout='wide')
+st.set_page_config(layout='wide' , 
+                  initial_sidebar_state="expanded")
+
 interface = st.container()
 
 
@@ -76,13 +78,9 @@ with interface:
     
     
     
-    
 
-
-    if st.spinner('Solda  ' + '>' +   '  tıklayaraq məsləhətçi botdan istifadə edə bilərsiniz!'):
-        time.sleep(3)
-        st.success('System istifadəyə hazırdır!')
-    else: pass
+        
+        
 
     st.title('Avtomobilin özəlliklərini daxil et')
 
