@@ -391,7 +391,7 @@ with interface:
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    qiymet = np.round(int(pred_model.predict(input_features)),-2)    
+    #qiymet = np.round(int(pred_model.predict(input_features)),-2)    
 
     # Streamlit tətbiqindən gələn məlumatları veritabanına əlavə etmək üçün funksiya
     def elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet):
