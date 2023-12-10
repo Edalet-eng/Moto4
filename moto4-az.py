@@ -1,5 +1,7 @@
-from PIL import Image
 import streamlit as st
+custom_icon_url = "6060.jpg"  
+st.set_page_config(page_icon=custom_icon_url,layout="wide")
+from PIL import Image
 import openai
 import pandas as pd
 import pickle
