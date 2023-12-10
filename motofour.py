@@ -1,5 +1,5 @@
-from PIL import Image
 import streamlit as st
+from PIL import Image
 import openai
 import pandas as pd
 import pickle
@@ -17,7 +17,6 @@ df=pd.read_csv('lastdata.csv')
 st.set_page_config(page_icon=custom_icon_url,
                    layout='wide' , 
                   initial_sidebar_state="expanded")
-df=pd.read_csv('lastdata.csv')
 
 interface = st.container()
 
@@ -80,12 +79,9 @@ with interface:
     
     
     
-    
 
-
-    with st.spinner('Solda  ' + '>' +   '  tıklayaraq məsləhətçi botdan istifadə edə bilərsiniz!'):
-        time.sleep(3)
-        st.success('System istifadəyə hazırdır!')
+        
+        
 
     st.title('Avtomobilin özəlliklərini daxil et')
 
@@ -388,14 +384,14 @@ with interface:
             else:
                 st.success('Hesablanır')
                 time.sleep(1)
-                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
+                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    qiymet = np.round(int(pred_model.predict(input_features)),-2)    
+    #qiymet = np.round(int(pred_model.predict(input_features)),-2)    
 
     # Streamlit tətbiqindən gələn məlumatları veritabanına əlavə etmək üçün funksiya
     def elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet):
