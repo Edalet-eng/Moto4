@@ -378,16 +378,16 @@ with interface:
 
     button1,button2=st.columns(2)
     if button1.button('Proqnozlaşdır'):
-        # try:
-        #     if df[df['model'] == model_mapping[model]]['model'].count() < 7:
-        #         st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
-        #     else:
-        #         st.success('Hesablanır')
-        #         time.sleep(1)
-        #         st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
-        # except Exception as e:
-        #     st.error(f"Yanlış əməliyyat: {e}")
-    # Add more details or actions if necessary
+        try:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
+                st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
+            else:
+                st.success('Hesablanır')
+                time.sleep(1)
+                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
+        except Exception as e:
+            st.error(f"Yanlış əməliyyat: {e}")
+    Add more details or actions if necessary
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
