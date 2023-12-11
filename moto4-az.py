@@ -325,8 +325,8 @@ with interface:
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    qiymet = np.round(int(pred_model.predict(input_features)),-2)    
-        
+    qiymet = float(np.round(int(pred_model.predict(input_features)),-2))    
+       
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
         try:
