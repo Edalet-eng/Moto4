@@ -1,4 +1,5 @@
 import streamlit as st
+from deta import Deta
 from PIL import Image
 import openai
 import pandas as pd
