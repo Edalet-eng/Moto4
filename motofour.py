@@ -1,4 +1,5 @@
 import streamlit as st
+from deta import Deta
 from PIL import Image
 import openai
 import pandas as pd
@@ -290,79 +291,13 @@ with interface:
 
     })
 
-    # SQLite veritabanı ilə əlaqə yaratmaq
-    engine = create_engine('sqlite:///cars.db', echo=True)
+    # Connect to Deta Base with your Data Key
+    deta = Deta(st.secrets["data_key"])
 
-    # Modeli təyin etmək
-    Base = declarative_base()
-    class Car(Base):
-        __tablename__ = 'cars'
-        id = Column(Integer, primary_key=True)
-        marka = Column(String)
-        model = Column(String)
-        yanacaq_novu = Column(String)
-        ötürücü = Column(String)
-        ban_növü = Column(String)
-        sürətlər_qutusu = Column(String)
-        yürüş = Column(Integer)
-        buraxılış_ili = Column(Integer)
-        rəng = Column(String)
-        hansı_bazar_üçün_yığılıb = Column(String)
-        mühərrik_hecmi = Column(Integer)
-        mühərrik_gucu = Column(Integer)
-        rənglənib = Column(String)
-        vuruğu_var = Column(String)
-        lehimli_disk = Column(String)
-        abs = Column(String)
-        lyuk = Column(String)
-        yağış_sensoru = Column(String)
-        dəri_salon = Column(String)
-        mərkəzi_qapanma = Column(String)
-        park_radarı = Column(String)
-        kondisioner = Column(String)
-        oturacaqların_isidilməsi = Column(String)
-        ksenon_lampalar = Column(String)
-        arxa_görüntü_kamerası = Column(String)
-        yan_pərdələr = Column(String)
-        oturacaqların_ventilyasiyası = Column(String)
-        #elave_melumat = Column(String)
-        qiymet = Column(Float)
-
-
-    # Veritabanını yaratmaq üçün
-    metadata = MetaData()
-    cars_table = Table('cars', metadata,
-                       Column('id', Integer, primary_key=True),
-                       Column('marka', String),
-                       Column('model', String),
-                       Column('yanacaq_novu', String),
-                       Column('ötürücü', String),
-                       Column('ban_növü', String),
-                       Column('sürətlər_qutusu', String),
-                       Column('yürüş', Integer),
-                       Column('buraxılış_ili', Integer),
-                       Column('rəng', String),
-                       Column('hansı_bazar_üçün_yığılıb', String),
-                       Column('mühərrik_hecmi', Integer),
-                       Column('mühərrik_gucu', Integer),
-                       Column('rənglənib', String),
-                       Column('vuruğu_var', String),
-                       Column('lehimli_disk', String),
-                       Column('abs', String),
-                       Column('lyuk', String),
-                       Column('yağış_sensoru', String),
-                       Column('dəri_salon', String),
-                       Column('mərkəzi_qapanma', String),
-                       Column('park_radarı', String),
-                       Column('kondisioner', String),
-                       Column('oturacaqların_isidilməsi', String),
-                       Column('ksenon_lampalar', String),
-                       Column('arxa_görüntü_kamerası', String),
-                       Column('yan_pərdələr', String),
-                       Column('oturacaqların_ventilyasiyası', String),
-                       #Column('elave_melumat' , String),
-                       Column('qiymet', Float))
-    metadata.create_all(engine)
+    # Create a new database "example-db"
+    # If you need a new database, just use another name.
+    db = deta.Base("cars-db")
+    db_com = deta.Base("comment-db")
 
     st.subheader(body = 'Model proqnozu')
 
@@ -387,79 +322,37 @@ with interface:
                 #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
-    #Add more details or actions if necessary
+    # Add more details or actions if necessary
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    #qiymet = np.round(int(pred_model.predict(input_features)),-2)    
-
-    # Streamlit tətbiqindən gələn məlumatları veritabanına əlavə etmək üçün funksiya
-    def elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet):
-        new_car = Car(marka=marka, model=model, yanacaq_novu=yanacaq_novu, ötürücü=ötürücü, ban_növü=ban_növü, sürətlər_qutusu=sürətlər_qutusu, yürüş=yürüş, buraxılış_ili=buraxılış_ili, rəng=rəng, hansı_bazar_üçün_yığılıb=hansı_bazar_üçün_yığılıb, mühərrik_hecmi=mühərrik_hecmi, mühərrik_gucu=mühərrik_gucu, rənglənib=rənglənib, vuruğu_var=vuruğu_var, lehimli_disk=lehimli_disk, abs=abs, lyuk=lyuk, yağış_sensoru=yağış_sensoru, dəri_salon=dəri_salon, mərkəzi_qapanma=mərkəzi_qapanma, park_radarı=park_radarı, kondisioner=kondisioner, oturacaqların_isidilməsi=oturacaqların_isidilməsi, ksenon_lampalar=ksenon_lampalar, arxa_görüntü_kamerası=arxa_görüntü_kamerası, yan_pərdələr= yan_pərdələr, oturacaqların_ventilyasiyası=oturacaqların_ventilyasiyası,qiymet=qiymet)
-        session = Session(bind=engine)
-        session.add(new_car)
-        session.commit ()
-        session.close()
+    qiymet = float(np.round(int(pred_model.predict(input_features)),-2))    
+       
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 7:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
-                elan_əlavə_et(marka, model, yanacaq_novu, ötürücü, ban_növü, sürətlər_qutusu, yürüş, buraxılış_ili, rəng, hansı_bazar_üçün_yığılıb, mühərrik_hecmi, mühərrik_gucu, rənglənib, vuruğu_var, lehimli_disk, abs, lyuk, yağış_sensoru, dəri_salon, mərkəzi_qapanma, park_radarı, kondisioner, oturacaqların_isidilməsi, ksenon_lampalar, arxa_görüntü_kamerası, yan_pərdələr, oturacaqların_ventilyasiyası,qiymet)
+                
+                db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
                 st.success("Elan əlavə edildi!")
-
+                st.balloons()
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
 
-    # SQLite veritabanı ilə əlaqə yaratmaq
-    engine = create_engine('sqlite:///comment.db', echo=True)
-
-    # Modeli təyin etmək
-    Base = declarative_base()
-    class Comment(Base):
-        __tablename__ = 'comment'
-        id = Column(Integer, primary_key=True)
-        comment = Column(String)
-
-
-    # Veritabanını yaratmaq üçün
-    metadata = MetaData()
-    cars_table = Table('comment', metadata,
-                       Column('id', Integer, primary_key=True),
-                       Column('comment', String))
-    metadata.create_all(engine)
-
-
+   
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
     yorum = st.text_area("Şərhinizi daxil edin:")
-    submit = st.button("Göndər")
-
-
-    def yorum_elave_et(yorum):
-        new_comment = Comment(comment=yorum)
-        session = Session(bind=engine)
-        session.add(new_comment)
-        session.commit ()
-        session.close()
-
-
-
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-    if submit:
-        yorum_elave_et(yorum)
+    if st.button("Göndər"):
+        db_com.put({'yorum': yorum})
         st.success("Şərh əlavə edildi!")
-
-
-
-
-
-
-        
-        
+        st.balloons()
+ 
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
@@ -530,6 +423,5 @@ with interface:
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-
 
  
