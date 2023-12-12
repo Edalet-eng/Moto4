@@ -297,6 +297,7 @@ with interface:
     # Create a new database "example-db"
     # If you need a new database, just use another name.
     db = deta.Base("cars-db")
+    db_com = deta.Base("comment-db")
 
     st.subheader(body = 'Model proqnozu')
 
@@ -340,46 +341,19 @@ with interface:
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
 
-    # SQLite veritabanı ilə əlaqə yaratmaq
-    engine = create_engine('sqlite:///comment.db', echo=True)
-
-    # Modeli təyin etmək
-    Base = declarative_base()
-    class Comment(Base):
-        __tablename__ = 'comment'
-        id = Column(Integer, primary_key=True)
-        comment = Column(String)
-
-
-    # Veritabanını yaratmaq üçün
-    metadata = MetaData()
-    cars_table = Table('comment', metadata,
-                       Column('id', Integer, primary_key=True),
-                       Column('comment', String))
-    metadata.create_all(engine)
-
-
+   
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
     yorum = st.text_area("Şərhinizi daxil edin:")
     submit = st.button("Göndər")
 
-
-    def yorum_elave_et(yorum):
-        new_comment = Comment(comment=yorum)
-        session = Session(bind=engine)
-        session.add(new_comment)
-        session.commit ()
-        session.close()
-
-
-
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if submit:
-        yorum_elave_et(yorum)
+        db_com.put({'id': id, 'yorum': yorum})
         st.success("Şərh əlavə edildi!")
+        st.balloons()
 
 
 
