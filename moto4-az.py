@@ -351,7 +351,7 @@ with interface:
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if submit:
-        db_com.put({'id': id, 'yorum': yorum})
+        db_com.put({'yorum': yorum})
         st.success("Şərh əlavə edildi!")
         st.balloons()
 
