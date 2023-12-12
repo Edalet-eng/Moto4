@@ -346,22 +346,13 @@ with interface:
 
     # Yorum əlavə etmə formunu tərtib edin
     yorum = st.text_area("Şərhinizi daxil edin:")
-    submit = st.button("Göndər")
-
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-    if submit:
+    if st.button("Göndər"):
         db_com.put({'yorum': yorum})
         st.success("Şərh əlavə edildi!")
         st.balloons()
-
-
-
-
-
-
-        
-        
+ 
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
