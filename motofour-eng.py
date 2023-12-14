@@ -55,28 +55,28 @@ with interface:
 
 
 
-  st.markdown(
-    """
-    <style>
-        .button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1;
-        }
-        
-        button:hover {
-            background-color: white;
-            color: #3498db;
-        }
-        button:active{
-            background-color: white:
-            color: white;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    st.markdown(
+      """
+      <style>
+          .button {
+              position: fixed;
+              top: 10px;
+              right: 10px;
+              z-index: 1;
+          }
+          
+          button:hover {
+              background-color: white;
+              color: #3498db;
+          }
+          button:active{
+              background-color: white:
+              color: white;
+          }
+      </style>
+      """,
+      unsafe_allow_html=True,
+  )
         
 
     st.title('Enter vehicle specifications')
