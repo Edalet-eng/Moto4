@@ -9,17 +9,16 @@ import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
 import streamlit as st
+from sqlalchemy import create_engine, Column, Integer, String, Float, MetaData, Table
 from sqlalchemy.orm import declarative_base, Session
 #st.image('587-161.png', use_column_width=True)
 
-custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
-st.set_page_config(page_icon=custom_icon_url,
-                   layout='wide' , 
+st.set_page_config(layout='wide' , 
                   initial_sidebar_state="expanded")
 
-interface = st.container()
 
+interface = st.container()
 
 
 with interface:
@@ -531,6 +530,9 @@ with interface:
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+ 
 
 
  
