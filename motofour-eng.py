@@ -51,35 +51,7 @@ with interface:
     rəng_mapping = {name: value for name, value in zip(df.rəng.str.capitalize().tolist(), rəng_encoding)}
 
     hansı_bazar_encoding = label_encoder.fit_transform(df['hansı_bazar_üçün_yığılıb'])
-    hansı_bazar_mapping = {name: value for name, value in zip(df.hansı_bazar_üçün_yığılıb.str.capitalize().tolist(), hansı_bazar_encoding)}
-  
-    st.markdown(
-    """
-    <style>
-        .button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1;
-        }
-        
-        button:hover {
-            background-color: white;
-            color: #3498db;
-        }
-        button:active{
-            background-color: white:
-            color: white;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-    
-    
-    
-
-        
+    hansı_bazar_mapping = {name: value for name, value in zip(df.hansı_bazar_üçün_yığılıb.str.capitalize().tolist(), hansı_bazar_encoding)}        
         
 
     st.title('Enter vehicle specifications')
