@@ -52,10 +52,7 @@ with interface:
 
     hansı_bazar_encoding = label_encoder.fit_transform(df['hansı_bazar_üçün_yığılıb'])
     hansı_bazar_mapping = {name: value for name, value in zip(df.hansı_bazar_üçün_yığılıb.str.capitalize().tolist(), hansı_bazar_encoding)}
-    
-    
-
-    
+  
     st.markdown(
     """
     <style>
