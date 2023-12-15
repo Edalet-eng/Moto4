@@ -1,5 +1,6 @@
-from PIL import Image
 import streamlit as st
+from deta import Deta
+from PIL import Image
 import openai
 import pandas as pd
 import pickle
@@ -9,14 +10,14 @@ import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
 import streamlit as st
-from sqlalchemy import create_engine, Column, Integer, String, Float, MetaData, Table
+
 from sqlalchemy.orm import declarative_base, Session
 #st.image('587-161.png', use_column_width=True)
-
+custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
-st.set_page_config(layout='wide' , 
+st.set_page_config(page_icon=custom_icon_url,
+                   layout='wide' , 
                   initial_sidebar_state="expanded")
-
 
 interface = st.container()
 
