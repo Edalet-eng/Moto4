@@ -98,7 +98,7 @@ with interface:
         model = st.selectbox(label = 'Model', options =df[df['marka'].str.capitalize() == marka]['model'].str.capitalize().sort_values().unique().tolist())  
         
     with ban_növü:
-        ban_növü = st.selectbox(label = 'Ban növü', options =df.ban_növü.str.capitalize().unique().tolist())
+        ban_növü = st.selectbox(label = 'Ban növü', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['ban_növü'].str.capitalize().sort_values().unique().tolist())
 
     st.markdown(body = '***')
 
@@ -131,8 +131,7 @@ with interface:
          hansı_bazar_üçün_yığılıb = st.selectbox(label = 'Hansı bazar üçün yığılıb', options =df.hansı_bazar_üçün_yığılıb.str.capitalize().sort_values().unique().tolist())
 
     with mühərrik_hecmi:
-        mühərrik_hecmi = st.number_input(label = 'Mühərrikin həcmi (sm³)', value = 0, step = 50 )
-        button_text = 'Send values'
+        mühərrik_hecmi = st.selectbox(label = 'Mühərrik hecmi (sm³)', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['mühərrik_hecmi'].sort_values().unique().tolist())
 
     with mühərrik_gucu:
         mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = 0, step = 1 )
