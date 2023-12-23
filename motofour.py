@@ -313,12 +313,12 @@ with interface:
     button1,button2=st.columns(2)
     if button1.button('Proqnozlaşdır'):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
             else:
                 st.success('Hesablanır')
                 time.sleep(1)
-                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
+                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
@@ -330,7 +330,7 @@ with interface:
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
                 
