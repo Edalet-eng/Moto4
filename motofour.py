@@ -10,7 +10,7 @@ import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
 import streamlit as st
-from sqlalchemy import create_engine, Column, Integer, String, Float, MetaData, Table
+
 from sqlalchemy.orm import declarative_base, Session
 #st.image('587-161.png', use_column_width=True)
 custom_icon_url = "6060.jpg"  
@@ -109,7 +109,7 @@ with interface:
         yanacaq_novu = st.selectbox(label = 'Yanacaq növü', options =df.yanacaq_novu.str.capitalize().unique().tolist())
 
     with ötürücü:
-        ötürücü = st.selectbox(label = 'Ötürücü', options =df.ötürücü.str.strip().str.capitalize().unique().tolist())
+        ötürücü = st.selectbox(label = 'Ötürücü', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['ötürücü'].str.capitalize().sort_values().unique().tolist())
 
     with sürətlər_qutusu:
         sürətlər_qutusu = st.selectbox(label = 'Sürətlər qutusu', options = df.sürətlər_qutusu.str.strip().str.capitalize().unique().tolist())
@@ -119,9 +119,14 @@ with interface:
 
     st.markdown(body = '***')
 
-    buraxılış_ili = st.slider(label='İl',min_value = int(df.buraxılış_ili.min()),
-                              max_value= int(df.buraxılış_ili.max()),value = int(df.buraxılış_ili.mean()))
+    min_value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].min())
+    max_value= int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].max())
+    value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].mean())
 
+    buraxılış_ili = st.number_input("Buraxılış ili", min_value=min_value, max_value=max_value, value=value)
+  
+    st.markdown(body = '***')
+  
     rəng, hansı_bazar_üçün_yığılıb,mühərrik_hecmi ,mühərrik_gucu= st.columns(spec = [1, 1,1,1])
 
     with rəng:
@@ -313,12 +318,12 @@ with interface:
     button1,button2=st.columns(2)
     if button1.button('Proqnozlaşdır'):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
             else:
                 st.success('Hesablanır')
                 time.sleep(1)
-                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
+                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
@@ -330,7 +335,7 @@ with interface:
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
                 
@@ -422,5 +427,3 @@ with interface:
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-
- 
