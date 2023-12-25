@@ -121,7 +121,7 @@ with interface:
 
     min_value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].min())
     max_value= int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].max())
-    #value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].mean())
+    value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].mean())
 
     buraxılış_ili = st.number_input("Buraxılış ili", min_value=min_value, max_value=max_value, value=value)
   
