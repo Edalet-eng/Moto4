@@ -319,7 +319,7 @@ with interface:
     button1,button2,button3 =st.columns(3)
     if button1.button('Proqnozlaşdır'):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
             else:
                 st.success('Hesablanır')
@@ -336,7 +336,7 @@ with interface:
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 7:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
                 
@@ -347,7 +347,6 @@ with interface:
             st.error(f"Yanlış əməliyyat: {e}")
     if button3.button("Şəkil Əlavə Et"):
       picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-      st.image(picture, caption="Şəkil yükləndi.", use_column_width=True)
       db_pic.put({'picture': picture})
       st.success("Şəkil əlavə edildi!")
     st.subheader(body = 'Şərhlər')
