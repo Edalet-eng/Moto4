@@ -316,7 +316,7 @@ with interface:
 
 
 
-    button1,button2 =st.columns(2)
+    button1,button2,button3 =st.columns(3)
     if button1.button('Proqnozlaşdır'):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 7:
@@ -345,11 +345,11 @@ with interface:
                 st.balloons()
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
-
-    picture = st.file_uploader("Şəkili seç", type=["jpg", "jpeg", "png"])
-    if picture is not None:
-      db_pic.put({'picture': picture})
-      st.success("Şəkil əlavə edildi!")
+    if button3.button("Şəkil Əlavə Et"):
+      picture = st.file_uploader("Şəkili seç", type=["jpg", "jpeg", "png"])
+      if picture is not None:
+        db_pic.put({'picture': picture})
+        st.success("Şəkil əlavə edildi!")
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
