@@ -345,10 +345,13 @@ with interface:
                 st.balloons()
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
+          
     if button3.button("Şəkil Əlavə Et"):
       picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-      db_pic.put({'picture': picture})
-      st.success("Şəkil əlavə edildi!")
+      if uploaded_file is not None:
+        db_pic.put({'picture': picture})
+        st.success("Şəkil əlavə edildi!")
+        
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
