@@ -346,10 +346,10 @@ with interface:
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
 
-   picture = st.file_uploader("Şəkili seç", type=["jpg", "jpeg", "png"])
+    picture = st.file_uploader("Şəkili seç", type=["jpg", "jpeg", "png"])
     if picture is not None:
-        db_pic.put({'picture': picture})
-        st.success("Şəkil əlavə edildi!")
+      db_pic.put({'picture': picture})
+      st.success("Şəkil əlavə edildi!")
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
