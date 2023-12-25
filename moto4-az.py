@@ -302,6 +302,7 @@ with interface:
     # If you need a new database, just use another name.
     db = deta.Base("cars-db")
     db_com = deta.Base("comment-db")
+    db_pic = deta.Base("picture-db")
 
     st.subheader(body = 'Model proqnozu')
 
@@ -315,7 +316,7 @@ with interface:
 
 
 
-    button1,button2=st.columns(2)
+    button1,button2 =st.columns(2)
     if button1.button('Proqnozlaşdır'):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 7:
@@ -345,7 +346,10 @@ with interface:
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
 
-   
+   picture = st.file_uploader("Şəkili seç", type=["jpg", "jpeg", "png"])
+    if picture is not None:
+        db_pic.put({'picture': picture})
+        st.success("Şəkil əlavə edildi!")
     st.subheader(body = 'Şərhlər')
 
     # Yorum əlavə etmə formunu tərtib edin
@@ -356,7 +360,7 @@ with interface:
         db_com.put({'yorum': yorum})
         st.success("Şərh əlavə edildi!")
         st.balloons()
- 
+   
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
