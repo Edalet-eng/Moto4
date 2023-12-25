@@ -348,7 +348,7 @@ with interface:
           
     if button3.button("Şəkil Əlavə Et"):
       picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-      if uploaded_file is not None:
+      if picture is not None:
         db_pic.put({'picture': picture})
         st.success("Şəkil əlavə edildi!")
         
