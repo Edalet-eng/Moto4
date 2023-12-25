@@ -109,7 +109,7 @@ with interface:
         yanacaq_novu = st.selectbox(label = 'Yanacaq növü', options =df.yanacaq_novu.str.capitalize().unique().tolist())
 
     with ötürücü:
-        ötürücü = st.selectbox(label = 'Ötürücü', options =df.ötürücü.str.strip().str.capitalize().unique().tolist())
+        ötürücü = st.selectbox(label = 'Ötürücü', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['ötürücü'].str.capitalize().sort_values().unique().tolist())
 
     with sürətlər_qutusu:
         sürətlər_qutusu = st.selectbox(label = 'Sürətlər qutusu', options = df.sürətlər_qutusu.str.strip().str.capitalize().unique().tolist())
@@ -119,9 +119,14 @@ with interface:
 
     st.markdown(body = '***')
 
-    buraxılış_ili = st.slider(label='İl',min_value = int(df.buraxılış_ili.min()),
-                              max_value= int(df.buraxılış_ili.max()),value = int(df.buraxılış_ili.mean()))
+    min_value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].min())
+    max_value= int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].max())
+    value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['buraxılış_ili'].mean())
 
+    buraxılış_ili = st.number_input("Buraxılış ili", min_value=min_value, max_value=max_value, value=value)
+  
+    st.markdown(body = '***')
+  
     rəng, hansı_bazar_üçün_yığılıb,mühərrik_hecmi ,mühərrik_gucu= st.columns(spec = [1, 1,1,1])
 
     with rəng:
