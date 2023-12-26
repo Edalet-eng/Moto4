@@ -347,11 +347,11 @@ with interface:
             st.error(f"Yanlış əməliyyat: {e}")
           
     if button3.button("Şəkil Əlavə Et"):
-    picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-    if picture is not None:
+      picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
+      if picture is not None:
         db_pic.put(picture)
         st.success("Şəkil əlavə edildi!")
-    else:
+      else:
         st.warning("Şəkil seçilmədi.")
         
     st.subheader(body = 'Şərhlər')
