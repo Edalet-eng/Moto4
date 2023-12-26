@@ -352,7 +352,7 @@ with interface:
         # Şəkili oxu
         image_data = uploaded_image.read()
         # Şəkili Deta verilənlər bazasına əlavə et
-        response = db_pic.put({"key": "unique_key", "sekil": image_data})
+        response = db_pic.put({"key": 1, "sekil": image_data})
         # İstifadəçiyə bildiriş ver
         st.success("Şəkil uğurla əlavə edildi.")
        
