@@ -348,13 +348,14 @@ with interface:
           
     
     uploaded_image = st.file_uploader("Şəkili seçin", type=["png", "jpg", "jpeg"])
+
     if uploaded_image is not None:
-        # Şəkili oxu
-        image_data = uploaded_image.read()
-        # Şəkili Deta verilənlər bazasına əlavə et
-        db_pic.put({"picture": image_data})
-        # İstifadəçiyə bildiriş ver
-        st.success("Şəkil uğurla əlavə edildi.")
+      # Şəkili oxu və databazaya yaz
+      image = Image.open(uploaded_image)
+      # Şəkili Deta verilənlər bazasına əlavə et
+      db_pic.put({"picture": image})
+      # İstifadəçiyə bildiriş ver
+      st.success("Şəkil uğurla əlavə edildi.")
        
         
     st.subheader(body = 'Şərhlər')
