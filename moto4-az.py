@@ -12,7 +12,7 @@ import sklearn
 import streamlit as st
 
 from sqlalchemy.orm import declarative_base, Session
-#st.image('587-161.png', use_column_width=True)
+
 custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
 st.set_page_config(page_icon=custom_icon_url,
