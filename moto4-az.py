@@ -316,7 +316,7 @@ with interface:
 
 
 
-    button1,button2,button3 =st.columns(3)
+    button1,button2 =st.columns(2)
     if button1.button('Proqnozlaşdır'):
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
@@ -346,18 +346,15 @@ with interface:
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
           
-    if button3.button("Şəkil Əlavə Et"):
-      uploaded_image = st.file_uploader("Şəkili seçin", type=["png", "jpg", "jpeg"])
-
-      if uploaded_image is not None:
+    
+    uploaded_image = st.file_uploader("Şəkili seçin", type=["png", "jpg", "jpeg"])
+    if uploaded_image is not None:
         # Şəkili oxu
         image_data = uploaded_image.read()
-        submit_button = st.form_submit_button("Daxil et")
-        if submit_button:
-          # Şəkili Deta verilənlər bazasına əlavə et
-          response = db_pic.put({"şəkil": image_data})
-          # İstifadəçiyə bildiriş ver
-          st.success("Şəkil uğurla əlavə edildi.")
+        # Şəkili Deta verilənlər bazasına əlavə et
+        response = db_pic.insert_one({"şəkil": image_data})
+        # İstifadəçiyə bildiriş ver
+        st.success("Şəkil uğurla əlavə edildi.")
        
         
     st.subheader(body = 'Şərhlər')
