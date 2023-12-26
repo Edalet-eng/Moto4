@@ -298,7 +298,7 @@ with interface:
     # Connect to Deta Base with your Data Key
     deta = Deta(st.secrets["data_key"])
 
-    # Create a new database "example-db"
+    
     # If you need a new database, just use another name.
     db = deta.Base("cars-db")
     db_com = deta.Base("comment-db")
@@ -355,10 +355,10 @@ with interface:
 
         # Şəkili Deta verilənlər bazasına əlavə et
         response = db_pic.insert_one({"şəkil": image_data})
-
-        # İstifadəçiyə bildiriş ver
-        st.success("Şəkil uğurla əlavə edildi.")
-     
+        if st.button("Şəkil Əlavə Et"):
+          # İstifadəçiyə bildiriş ver
+          st.success("Şəkil uğurla əlavə edildi.")
+       
         
     st.subheader(body = 'Şərhlər')
 
