@@ -355,7 +355,7 @@ with interface:
 
         # Şəkili Deta verilənlər bazasına əlavə et
         response = db_pic.insert_one({"şəkil": image_data})
-        if st.button("Şəkil Əlavə Et"):
+        if st.button("Əlavə Et"):
           # İstifadəçiyə bildiriş ver
           st.success("Şəkil uğurla əlavə edildi.")
        
