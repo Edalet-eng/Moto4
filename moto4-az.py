@@ -3,7 +3,7 @@ from deta import Deta
 from PIL import Image
 import openai
 import pandas as pd
-import pickle
+import pickle 
 import numpy as np
 import sqlite3
 import time
@@ -346,13 +346,13 @@ with interface:
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
           
-    # if button3.button("Şəkil Əlavə Et"):
-    # picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-    # if picture is not None:
-    #   db_pic.put(picture)
-    #   st.success("Şəkil əlavə edildi!")
-    # else:
-    #   st.warning("Şəkil seçilmədi.")
+    if button3.button("Şəkil Əlavə Et"):
+    picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
+    if picture is not None:
+        db_pic.put(picture)
+        st.success("Şəkil əlavə edildi!")
+    else:
+        st.warning("Şəkil seçilmədi.")
         
     st.subheader(body = 'Şərhlər')
 
