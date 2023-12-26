@@ -355,7 +355,7 @@ with interface:
         submit_button = st.form_submit_button("Daxil et")
         if submit_button:
           # Şəkili Deta verilənlər bazasına əlavə et
-          response = db_pic.insert_one({"şəkil": image_data})
+          response = db_pic.put({"şəkil": image_data})
           # İstifadəçiyə bildiriş ver
           st.success("Şəkil uğurla əlavə edildi.")
        
