@@ -347,9 +347,17 @@ with interface:
             st.error(f"Yanlış əməliyyat: {e}")
           
     if button3.button("Şəkil Əlavə Et"):
-      picture = st.file_uploader("Şəkil seç", type=["jpg", "jpeg", "png"])
-      db_pic.put(picture)
-      st.success("Şəkil əlavə edildi!")
+      uploaded_image = st.file_uploader("Şəkili seçin", type=["png", "jpg", "jpeg"])
+
+      if uploaded_image is not None:
+        # Şəkili oxu
+        image_data = uploaded_image.read()
+
+        # Şəkili Deta verilənlər bazasına əlavə et
+        response = db_pic.insert_one({"şəkil": image_data})
+
+        # İstifadəçiyə bildiriş ver
+        st.success("Şəkil uğurla əlavə edildi.")
      
         
     st.subheader(body = 'Şərhlər')
