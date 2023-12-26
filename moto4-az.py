@@ -353,7 +353,7 @@ with interface:
       # Şəkili oxu və databazaya yaz
       image = Image.open(uploaded_image)
       # Şəkili Deta verilənlər bazasına əlavə et
-      db_pic.put({"picture": image})
+      db_pic.put({"picture": image.tobytes()})
       # İstifadəçiyə bildiriş ver
       st.success("Şəkil uğurla əlavə edildi.")
        
