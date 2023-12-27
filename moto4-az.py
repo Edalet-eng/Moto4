@@ -329,7 +329,7 @@ with interface:
                 max_qiymet = np.round(qiymet+0.03*qiymet,-2)
                 st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
                 qiymet = st.number_input('Sizin qeyd etdiyiniz qiymət',step = 10)
-                if st.button("Elan Əlavə Et"):
+                if button("Elan Əlavə Et"):
                   db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
                   st.success("Elan əlavə edildi!")
                   st.balloons()
