@@ -363,7 +363,7 @@ with interface:
         
     st.subheader(body = 'Şərhlər')
 
-    # Yorum əlavə etmə formunu tərtib edin
+    
     yorum = st.text_area("Şərhinizi daxil edin:")
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
