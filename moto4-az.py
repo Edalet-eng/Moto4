@@ -328,13 +328,14 @@ with interface:
                 min_qiymet = np.round(qiymet-0.07*qiymet,-2)
                 max_qiymet = np.round(qiymet+0.03*qiymet,-2)
                 st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
+                teyin_edilen_qiymet = st.number_input('Sizin qeyd etdiyiniz qiymət')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    qiymet = float(np.round(int(pred_model.predict(input_features)),-2))    
+    #qiymet = float(np.round(int(pred_model.predict(input_features)),-2))    
        
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
     if button2.button("Elan Əlavə Et"):
@@ -343,22 +344,12 @@ with interface:
                 st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
             else:
                 
-                db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
+                db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': teyin_edilen_qiymet})
                 st.success("Elan əlavə edildi!")
                 st.balloons()
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
           
-    
-    uploaded_image = st.file_uploader("Şəkili seçin", type=["png", "jpg", "jpeg"])
-
-    if uploaded_image is not None:
-      # Şəkili oxu və databazaya yaz
-      image = Image.open(uploaded_image)
-      # Şəkili Deta verilənlər bazasına əlavə et
-      db_pic.put({"picture": image.tobytes()})
-      # İstifadəçiyə bildiriş ver
-      st.success("Şəkil uğurla əlavə edildi.")
        
         
     st.subheader(body = 'Şərhlər')
