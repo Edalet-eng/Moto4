@@ -323,7 +323,10 @@ with interface:
             else:
                 st.success('Hesablanır')
                 time.sleep(1)
-                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: {np.round(int(pred_model.predict(input_features)),-2)} AZN')
+                qiymet = np.round(int(pred_model.predict(input_features)),-2)
+                min_qiymet = np.round(qiymet-0.07*qiymet,-2)
+                max_qiymet = np.round(qiymet+0.03*qiymet,-2)
+                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
