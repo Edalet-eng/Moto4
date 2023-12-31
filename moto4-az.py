@@ -317,7 +317,11 @@ with interface:
 
 
     #button1 =st.columns(1)
-    if st.button('Proqnozlaşdır'):
+    if 'button_clicked' not in st.session_state:
+        st.session_state.button_clicked = False
+    def callback():
+        st.session_state.button_clicked = True
+    if (st.button('Proqnozlaşdır', on_click=callback) or st.session_state.button_clicked):  
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
