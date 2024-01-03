@@ -19,6 +19,7 @@ catboost==1.2
 certifi==2022.5.18.1
 cffi==1.15.0
 chardet==5.2.0
+httpx==0.26.0
 charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.4
