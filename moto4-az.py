@@ -12,8 +12,6 @@ import sklearn
 import streamlit as st
 from googletrans import Translator
 
-from sqlalchemy.orm import declarative_base, Session
-
 custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
 st.set_page_config(page_icon=custom_icon_url,
