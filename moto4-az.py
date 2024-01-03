@@ -357,8 +357,7 @@ with interface:
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
-    translator = Translator(service_urls=[
-      'translate.google.com'])
+    translator = Translator()
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
 
@@ -405,7 +404,7 @@ with interface:
 
         # Create a message to send to the chatbot
         car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
-        car_info_message_eng = translator.translate(car_info_message, dest='en')
+        car_info_message_eng = translator.translate(car_info_message, src='az', dest='en')
 
         # Send the message to the chatbot
         st.session_state.messages.append({"role": "user", "content": car_info_message_eng.text})
@@ -432,8 +431,3 @@ with interface:
             translation = translator.translate(full_response, dest='az').text
             message_placeholder.markdown(translation)
         st.session_state.messages.append({"role": "assistant", "content": translation})
-        
-        
-
-
- 
