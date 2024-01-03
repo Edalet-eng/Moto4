@@ -406,7 +406,7 @@ with interface:
 
         # Create a message to send to the chatbot
         car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
-        car_info_message_eng = translator.translate(car_info_message, dest='en')
+        car_info_message_eng = translator.translate(car_info_message, dest='en'
 
         # Send the message to the chatbot
         st.session_state.messages.append({"role": "user", "content": car_info_message_eng.text})
