@@ -20,7 +20,6 @@ st.set_page_config(page_icon=custom_icon_url,
 
 interface = st.container()
 
-
 with interface:
 
     label_encoder = LabelEncoder()
