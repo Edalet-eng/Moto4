@@ -355,6 +355,7 @@ with interface:
         st.balloons()
    
         
+        
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
     translator = Translator()
@@ -373,7 +374,8 @@ with interface:
         submit_button = st.form_submit_button("Daxil et")
         car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        prompt_eng = translator.translate(prompt, src='az', dest='en')
+        st.session_state.messages.append({"role": "user", "content": prompt_eng.text})
 
         with st.sidebar.chat_message("user"):
             st.markdown(prompt)
@@ -390,9 +392,10 @@ with interface:
                 stream=True,
             ):
                 full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+                #message_placeholder.markdown(full_response + "▌")
+            translation = translator.translate(full_response, dest='az').text
+            message_placeholder.markdown(translation)
+        st.session_state.messages.append({"role": "assistant", "content": translation})
 
 
     if car_info_button:
