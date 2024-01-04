@@ -137,8 +137,8 @@ with interface:
         mühərrik_hecmi = st.selectbox(label = 'Mühərrik hecmi (sm³)', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['mühərrik_hecmi'].sort_values().unique().tolist())
 
     with mühərrik_gucu:
-        mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = 0, step = 1 )
-        button_text = 'Send values' 
+        value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model][df['mühərrik_hecmi']== mühərrik_hecmi]['mühərrik_gucu'].mean())
+        mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = value)
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
