@@ -3,16 +3,15 @@ from deta import Deta
 from PIL import Image
 import openai
 import pandas as pd
-import pickle
+import pickle 
 import numpy as np
 import sqlite3
 import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
 import streamlit as st
+from googletrans import Translator
 
-from sqlalchemy.orm import declarative_base, Session
-#st.image('587-161.png', use_column_width=True)
 custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
 st.set_page_config(page_icon=custom_icon_url,
@@ -20,7 +19,6 @@ st.set_page_config(page_icon=custom_icon_url,
                   initial_sidebar_state="expanded")
 
 interface = st.container()
-
 
 with interface:
 
@@ -139,8 +137,8 @@ with interface:
         mühərrik_hecmi = st.selectbox(label = 'Mühərrik hecmi (sm³)', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['mühərrik_hecmi'].sort_values().unique().tolist())
 
     with mühərrik_gucu:
-        mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = 0, step = 1 )
-        button_text = 'Send values' 
+        value = int(df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model][df['mühərrik_hecmi']== mühərrik_hecmi]['mühərrik_gucu'].mean())
+        mühərrik_gucu = st.number_input(label = 'Mühərrikin gücü, a.g.', value = value)
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
@@ -298,10 +296,11 @@ with interface:
     # Connect to Deta Base with your Data Key
     deta = Deta(st.secrets["data_key"])
 
-    # Create a new database "example-db"
+    
     # If you need a new database, just use another name.
     db = deta.Base("cars-db")
     db_com = deta.Base("comment-db")
+    db_pic = deta.Base("picture-db")
 
     st.subheader(body = 'Model proqnozu')
 
@@ -315,8 +314,12 @@ with interface:
 
 
 
-    button1,button2=st.columns(2)
-    if button1.button('Proqnozlaşdır'):
+    #button1 =st.columns(1)
+    if 'button_clicked' not in st.session_state:
+        st.session_state.button_clicked = False
+    def callback():
+        st.session_state.button_clicked = True
+    if (st.button('Proqnozlaşdır', on_click=callback) or st.session_state.button_clicked):  
         try:
             if df[df['model'] == model_mapping[model]]['model'].count() < 10:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
@@ -327,31 +330,22 @@ with interface:
                 min_qiymet = np.round(qiymet-0.07*qiymet,-2)
                 max_qiymet = np.round(qiymet+0.03*qiymet,-2)
                 #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
+                qiymet = st.number_input('Sizin qeyd etdiyiniz qiymət',step = 100)
+                if st.button("Elan Əlavə Et"):
+                  db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
+                  st.success("Elan əlavə edildi!")
+                  st.balloons()
+                  
         except Exception as e:
             st.error(f"Yanlış əməliyyat: {e}")
     # Add more details or actions if necessary
 
 
     st.write('<hr style="height: px; background-color: gray; border: none; margin: px 0;" />', unsafe_allow_html=True)
-    qiymet = float(np.round(int(pred_model.predict(input_features)),-2))    
-       
-    # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
-    if button2.button("Elan Əlavə Et"):
-        try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
-                st.warning("Qiymət proqnozlaşdırıla bilmədiyi üçün daxil etdiyiniz elan əlavə oluna bilməyəcək.")
-            else:
-                
-                db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
-                st.success("Elan əlavə edildi!")
-                st.balloons()
-        except Exception as e:
-            st.error(f"Yanlış əməliyyat: {e}")
-
-   
+           
     st.subheader(body = 'Şərhlər')
 
-    # Yorum əlavə etmə formunu tərtib edin
+    
     yorum = st.text_area("Şərhinizi daxil edin:")
         
     # Streamlit tətbiqindən gələn məlumatlarla əlavə etmə funksiyasını çağırmaq
@@ -359,10 +353,12 @@ with interface:
         db_com.put({'yorum': yorum})
         st.success("Şərh əlavə edildi!")
         st.balloons()
- 
+   
+        
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = "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"
+    translator = Translator()
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
 
@@ -378,7 +374,8 @@ with interface:
         submit_button = st.form_submit_button("Daxil et")
         car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        prompt_eng = translator.translate(prompt, src='az', dest='en')
+        st.session_state.messages.append({"role": "user", "content": prompt_eng.text})
 
         with st.sidebar.chat_message("user"):
             st.markdown(prompt)
@@ -395,9 +392,10 @@ with interface:
                 stream=True,
             ):
                 full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+                #message_placeholder.markdown(full_response + "▌")
+            translation = translator.translate(full_response, dest='az').text
+            message_placeholder.markdown(translation)
+        st.session_state.messages.append({"role": "assistant", "content": translation})
 
 
     if car_info_button:
@@ -409,9 +407,10 @@ with interface:
 
         # Create a message to send to the chatbot
         car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
+        car_info_message_eng = translator.translate(car_info_message, src='az', dest='en')
 
         # Send the message to the chatbot
-        st.session_state.messages.append({"role": "user", "content": car_info_message})
+        st.session_state.messages.append({"role": "user", "content": car_info_message_eng.text})
         with st.sidebar.chat_message("user"):
             st.markdown(car_info_message)
 
@@ -426,7 +425,12 @@ with interface:
                 ],
                 stream=True,
             ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "▌")
-            message_placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+                delta_content = response.choices[0].delta.get("content")
+                if delta_content is not None:
+                    full_response += delta_content
+                    message_placeholder.markdown(f"Xahiş olunur, bir neçə saniyə gözləyin... ▌")
+                    #message_placeholder.markdown(translated_response + "▌")
+                    
+            translation = translator.translate(full_response, dest='az').text
+            message_placeholder.markdown(translation)
+        st.session_state.messages.append({"role": "assistant", "content": translation})
