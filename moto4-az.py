@@ -19,7 +19,6 @@ st.set_page_config(page_icon=custom_icon_url,
                   initial_sidebar_state="expanded")
 
 interface = st.container()
-
 with interface:
 
     label_encoder = LabelEncoder()
