@@ -30,7 +30,6 @@ with interface:
     model_encoding = label_encoder.fit_transform(df['model'])
     model_mapping = {name: value for name, value in zip(df.model.str.capitalize().tolist(), model_encoding)}
 
-
     yanacaq_novu_encoding = label_encoder.fit_transform(df['yanacaq_novu'])
     yanacaq_novu_mapping = {name: value for name, value in zip(df.yanacaq_novu.str.capitalize().tolist(), yanacaq_novu_encoding)}
 
