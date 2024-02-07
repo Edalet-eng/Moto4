@@ -102,7 +102,7 @@ with interface:
     yanacaq_novu, ötürücü, sürətlər_qutusu ,yürüş= st.columns(spec = [1, 1, 1,1])
 
     with yanacaq_novu:
-        yanacaq_novu = st.selectbox(label = 'Yanacaq növü', options =df.yanacaq_novu.str.capitalize().unique().tolist())
+        yanacaq_novu = st.selectbox(label = 'Yanacaq növü', options =df.yanacaq_novu.str.capitalize().sort_values().unique().tolist())
 
     with ötürücü:
         ötürücü = st.selectbox(label = 'Ötürücü', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['ötürücü'].str.capitalize().sort_values().unique().tolist())
