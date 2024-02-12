@@ -328,7 +328,7 @@ with interface:
                 time.sleep(1)
                 qiymet = np.round(int(pred_model.predict(input_features)),-2)
                 min_qiymet = np.round(qiymet-0.07*qiymet,-2)
-                max_qiymet = np.round(qiymet+0.03*qiymet,-2)
+                max_qiymet = np.round(qiymet+0.035*qiymet,-2)
                 #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
                 qiymet = st.number_input('Sizin qeyd etdiyiniz qiymət',step = 100)
                 if st.button("Elan Əlavə Et"):
