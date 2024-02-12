@@ -319,7 +319,7 @@ with interface:
         st.session_state.button_clicked = True
     if (st.button('Proqnozlaşdır', on_click=callback) or st.session_state.button_clicked):  
         try:
-            if df[df['model'] == model_mapping[model]]['model'].count() < 10:
+            if df[df['model'] == model_mapping[model]]['model'].count() < 15:
                 st.warning("Bazada kifayət qədər məlumat olmadığından daxil etdiyiniz avtomobil qiyməti proqnozlaşdırıla bilməyəcək")
             else:
                 st.success('Hesablanır')
