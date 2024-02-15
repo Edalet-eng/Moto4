@@ -74,9 +74,7 @@ with interface:
 )
     
     
-    
-
-        
+  
         
 
     st.title('Avtomobilin özəlliklərini daxil et')
