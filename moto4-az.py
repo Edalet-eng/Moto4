@@ -107,7 +107,7 @@ with interface:
         ötürücü = st.selectbox(label = 'Ötürücü', options =df[df['marka'].str.capitalize() == marka][df['model'].str.capitalize() == model]['ötürücü'].str.capitalize().sort_values().unique().tolist())
 
     with sürətlər_qutusu:
-        sürətlər_qutusu = st.selectbox(label = 'Sürətlər qutusu', options = df.sürətlər_qutusu.str.strip().str.capitalize().unique().tolist())
+        sürətlər_qutusu = st.selectbox(label = 'Sürətlər qutusu', options = df.sürətlər_qutusu.str.strip().str.capitalize().sort_values().unique().tolist())
 
     with yürüş:
          yürüş = st.number_input(label = 'Yürüş (km)', value = 0, step = 1000 )
