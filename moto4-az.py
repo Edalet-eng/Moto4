@@ -347,7 +347,8 @@ with interface:
         st.success("Şərh əlavə edildi!")
         st.balloons()
    
-        
+
+  
         
     st.sidebar.title("Məsləhətçi")
     translator = Translator()
