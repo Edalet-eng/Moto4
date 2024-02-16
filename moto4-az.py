@@ -228,7 +228,6 @@ with interface:
     df['vuruğu_var'] = df['vuruğu_var'].replace(vuruğu_var_encoding)
 
 
-
     marka2 = marka_mapping[marka]
     model2 = model_mapping[model]
     yanacaq_novu2 = yanacaq_novu_mapping[yanacaq_novu]
