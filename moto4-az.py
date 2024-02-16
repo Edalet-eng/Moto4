@@ -352,7 +352,7 @@ with interface:
         
         
     st.sidebar.title("Məsləhətçi")
-    openai.api_key = "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"
+    openai.api_key = "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"
     translator = Translator()
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
