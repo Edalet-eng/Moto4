@@ -23,7 +23,7 @@ with interface:
 
     label_encoder = LabelEncoder()
 
-
+ 
     marka_encoding = label_encoder.fit_transform(df['marka'].str.capitalize())
     marka_mapping = {name: value for name, value in zip(df.marka.str.capitalize().tolist(), marka_encoding)}
 
