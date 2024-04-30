@@ -90,7 +90,6 @@ numpy==1.22.3
 opencv-python==4.5.5.64
 openpyxl==3.1.1
 openai==0.28.0
-openai2==1.7.4
 packaging==21.3
 pandas==1.4.2
 pandocfilters==1.5.0
