@@ -374,7 +374,7 @@ with interface:
         
         
     st.sidebar.title("Advisor bot")
-    openai.api_key = "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"
+    openai.api_key = "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"
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
 
