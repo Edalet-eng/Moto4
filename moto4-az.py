@@ -368,7 +368,11 @@ with interface:
         submit_button = st.form_submit_button("Daxil et")
         car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
-        prompt_eng = translator.translate(prompt, src='az', dest='en')
+        try:
+          prompt_eng = translator.translate(prompt, src='az', dest='en').text
+        except:
+          # Handle any exceptions that might occur during translation
+          st.error("An error occurred during translation. Please try again later.")
         st.session_state.messages.append({"role": "user", "content": prompt_eng.text})
 
         with st.sidebar.chat_message("user"):
