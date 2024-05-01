@@ -369,6 +369,7 @@ with interface:
         car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
         prompt_eng = translator.translate(prompt, src='az', dest='en')
+      
         st.session_state.messages.append({"role": "user", "content": prompt_eng.text})
       
         with st.sidebar.chat_message("user"):
