@@ -11,7 +11,7 @@ from sklearn.preprocessing import LabelEncoder
 import sklearn
 import streamlit as st
 from googletrans import Translator
- 
+
 custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
 st.set_page_config(page_icon=custom_icon_url,
@@ -19,18 +19,16 @@ st.set_page_config(page_icon=custom_icon_url,
                   initial_sidebar_state="expanded")
 
 interface = st.container()
-
 with interface:
 
     label_encoder = LabelEncoder()
 
-
+ 
     marka_encoding = label_encoder.fit_transform(df['marka'].str.capitalize())
     marka_mapping = {name: value for name, value in zip(df.marka.str.capitalize().tolist(), marka_encoding)}
 
     model_encoding = label_encoder.fit_transform(df['model'])
     model_mapping = {name: value for name, value in zip(df.model.str.capitalize().tolist(), model_encoding)}
-
 
     yanacaq_novu_encoding = label_encoder.fit_transform(df['yanacaq_novu'])
     yanacaq_novu_mapping = {name: value for name, value in zip(df.yanacaq_novu.str.capitalize().tolist(), yanacaq_novu_encoding)}
@@ -50,8 +48,6 @@ with interface:
     hansı_bazar_encoding = label_encoder.fit_transform(df['hansı_bazar_üçün_yığılıb'])
     hansı_bazar_mapping = {name: value for name, value in zip(df.hansı_bazar_üçün_yığılıb.str.capitalize().tolist(), hansı_bazar_encoding)}
     
-    
-
     
     st.markdown(
     """
@@ -77,10 +73,8 @@ with interface:
 )
     
     
-    
-
-        
-        
+  
+  
 
     st.title('Avtomobilin özəlliklərini daxil et')
 
@@ -233,7 +227,6 @@ with interface:
     df['vuruğu_var'] = df['vuruğu_var'].replace(vuruğu_var_encoding)
 
 
-
     marka2 = marka_mapping[marka]
     model2 = model_mapping[model]
     yanacaq_novu2 = yanacaq_novu_mapping[yanacaq_novu]
@@ -329,7 +322,7 @@ with interface:
                 qiymet = np.round(int(pred_model.predict(input_features)),-2)
                 min_qiymet = np.round(qiymet-0.07*qiymet,-2)
                 max_qiymet = np.round(qiymet+0.035*qiymet,-2)
-                #st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
+                st.markdown(f'### Avtomobil üçün proqnozlaşdırılan qiymət: [{min_qiymet} - {max_qiymet}] AZN aralığındadır.')
                 qiymet = st.number_input('Sizin qeyd etdiyiniz qiymət',step = 100)
                 if st.button("Elan Əlavə Et"):
                   db.put({'marka': marka, 'model': model, 'yanacaq_novu': yanacaq_novu, 'ötürücü': ötürücü, 'ban_növü': ban_növü, 'sürətlər_qutusu': sürətlər_qutusu, 'yürüş': yürüş, 'buraxılış_ili': buraxılış_ili, 'rəng': rəng, 'hansı_bazar_üçün_yığılıb': hansı_bazar_üçün_yığılıb, 'mühərrik_hecmi': mühərrik_hecmi, 'mühərrik_gucu': mühərrik_gucu, 'rənglənib': rənglənib, 'vuruğu_var': vuruğu_var, 'lehimli_disk': lehimli_disk, 'abs': abs, 'lyuk': lyuk, 'yağış_sensoru': yağış_sensoru, 'dəri_salon': dəri_salon, 'mərkəzi_qapanma': mərkəzi_qapanma, 'park_radarı': park_radarı, 'kondisioner': kondisioner, 'oturacaqların_isidilməsi': oturacaqların_isidilməsi, 'ksenon_lampalar': ksenon_lampalar, 'arxa_görüntü_kamerası': arxa_görüntü_kamerası, 'yan_pərdələr': yan_pərdələr, 'oturacaqların_ventilyasiyası': oturacaqların_ventilyasiyası,'qiymet': qiymet})
@@ -354,9 +347,9 @@ with interface:
         st.success("Şərh əlavə edildi!")
         st.balloons()
    
-        
 
   
+        
     st.sidebar.title("Məsləhətçi")
     openai.api_key = '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'
     translator = Translator()
