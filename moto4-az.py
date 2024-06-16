@@ -351,8 +351,8 @@ with interface:
     st.sidebar.title("Məsləhətçi")
     openai.api_key = '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'
 
-  if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-3.5-turbo"
+    if "openai_model" not in st.session_state:
+          st.session_state["openai_model"] = "gpt-3.5-turbo"
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
