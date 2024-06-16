@@ -400,7 +400,7 @@ with interface:
         car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
 
       # Send the message to the chatbot
-        st.session_state.messages.append({"role": "user", "content": car_info_message.text})
+        st.session_state.messages.append({"role": "user", "content": car_info_message})
         with st.sidebar.chat_message("user"):
             st.markdown(car_info_message)
 
