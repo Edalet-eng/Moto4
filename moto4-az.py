@@ -352,8 +352,8 @@ with interface:
         
     st.sidebar.title("Məsləhətçi")
     openai.api_key = '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'
-    translator = Translator()
-    if "openai_model" not in st.session_state:
+
+  if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-3.5-turbo"
 
     if "messages" not in st.session_state:
@@ -368,8 +368,7 @@ with interface:
         submit_button = st.form_submit_button("Daxil et")
         car_info_button = st.sidebar.button("Avtomobiliniz haqqında məlumat al")
     if submit_button:
-        prompt_eng = translator.translate(prompt, src='az', dest='en')
-        st.session_state.messages.append({"role": "user", "content": prompt_eng.text})
+        st.session_state.messages.append({"role": "user", "content": prompt.text})
 
         with st.sidebar.chat_message("user"):
             st.markdown(prompt)
@@ -387,9 +386,9 @@ with interface:
             ):
                 full_response += response.choices[0].delta.get("content", "")
                 #message_placeholder.markdown(full_response + "▌")
-            translation = translator.translate(full_response, dest='az').text
-            message_placeholder.markdown(translation)
-        st.session_state.messages.append({"role": "assistant", "content": translation})
+            
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
     if car_info_button:
@@ -401,10 +400,9 @@ with interface:
 
         # Create a message to send to the chatbot
         car_info_message = f"{engine_value} mühərrik həcmli {year_value}-ci ilin {marka_value}/{model_value} markalı avtomobilin üstün və zəif tərəfləri haqqında məlumat ver."
-        car_info_message_eng = translator.translate(car_info_message, src='az', dest='en')
 
-        # Send the message to the chatbot
-        st.session_state.messages.append({"role": "user", "content": car_info_message_eng.text})
+      # Send the message to the chatbot
+        st.session_state.messages.append({"role": "user", "content": car_info_message.text})
         with st.sidebar.chat_message("user"):
             st.markdown(car_info_message)
 
@@ -425,6 +423,5 @@ with interface:
                     message_placeholder.markdown(f"Xahiş olunur, bir neçə saniyə gözləyin... ▌")
                     #message_placeholder.markdown(translated_response + "▌")
                     
-            translation = translator.translate(full_response, dest='az').text
-            message_placeholder.markdown(translation)
-        st.session_state.messages.append({"role": "assistant", "content": translation})
+            message_placeholder.markdown(full_response)
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
