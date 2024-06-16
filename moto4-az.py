@@ -9,8 +9,6 @@ import sqlite3
 import time
 from sklearn.preprocessing import LabelEncoder
 import sklearn
-import streamlit as st
-from googletrans import Translator
 
 custom_icon_url = "6060.jpg"  
 df=pd.read_csv('lastdata.csv')
